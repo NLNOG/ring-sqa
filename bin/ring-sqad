@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+begin
+  require 'ring/sqa/cli'
+  Ring::SQA::CLI.new
+rescue => error
+  warn error.to_s
+  raise if Ring::SQA::CFG[:debug]
+end
