@@ -1,4 +1,3 @@
-require_relative '../nodes'
 require 'timeout'
 
 module Ring
@@ -18,10 +17,10 @@ class SQA
 
     private
 
-    def initialize queue, database
+    def initialize queue, database, nodes
       @queue = queue
       @db    = database
-      @nodes = Nodes.new
+      @nodes = nodes
       run
     end
 

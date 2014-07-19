@@ -5,9 +5,10 @@ class SQA
 
   class Alarm
     def send msg
-      @alarm_methods.each do |alarm_method|
-        alarm_method.send msg
-      end
+      Log.debug "ALARM: #{msg}"
+      #@alarm_methods.each do |alarm_method|
+      #  alarm_method.send msg
+      #end
     end
 
     private
