@@ -12,6 +12,9 @@ class SQA
       puts "Running as pid: #{pid}"
       Process.daemon if @opts.daemonize?
       SQA.new
+    rescue => error
+      crash error
+      raise
     end
 
     private
@@ -32,6 +35,16 @@ class SQA
       end
       [slop.parse!, slop]
     end
+
+    def crash error
+      open CFG[:crash], 'w' do |file|
+        file.puts error.class.to_s + ' => ' + error.message
+        file.puts '-' * 70
+        file.puts error.backtrace
+        file.puts '-' * 70
+      end
+    end
+
   end
 
 end

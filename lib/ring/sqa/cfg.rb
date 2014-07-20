@@ -6,6 +6,7 @@ module Ring
       email_to:   'saku@ytti.fi',
       email_from: 'saku@ytti.fi',
       db:         '/tmp/ring-sqa.db',
+      crash:      '/tmp/ring-sqa.crash',
     }
   end
 end
