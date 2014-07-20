@@ -10,8 +10,9 @@ module Ring
   class SQA
     def run
       Thread.abort_on_exception = true
-      @responder[:thread] = Thread.new { Responder.new @responder[:queue] }
-      @querier[:thread]   = Thread.new { Querier.new @querier[:queue], @database, @nodes }
+      Thread.new { Responder.new }
+      Thread.new { Sender.new @database, @nodes }
+      Thread.new { Receiver.new @database }
       Analyzer.new(@database, @nodes).run
     end
 
@@ -19,8 +20,6 @@ module Ring
 
     def initialize
       require_relative 'log'
-      @querier   = { queue: Queue.new }
-      @responder = { queue: Queue.new }
       @database  = Database.new
       @nodes     = Nodes.new
       run

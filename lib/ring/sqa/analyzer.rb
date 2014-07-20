@@ -4,16 +4,14 @@ module Ring
 class SQA
 
   class Analyzer
-    #SLEEP = 30*60
-    SLEEP = 10
-    VIOLATE_MULTIPLIER = 3.5
+    SLEEP         = 10 # sleep between analyze rounds
+    INFLIGHT_WAIT = 1  # how long to wait for inflight records
     def run
       loop do
-        @nodes.list.each do |node|
-          median = @db.median node
-          violate = median * VIOLATE_MULTIPLIER
-          next unless (@db.latency_above node, violate) > 0
-          @alarm.send "#{node} latency above alarm threshold"
+        @db_id_seen, records = @db.not_ok(@db_id_seen+1)
+        sleep INFLIGHT_WAIT
+        records.all.each do |record|
+          @alarm.set record[:id], record[:peer]
         end
         Log.debug "Analyzer loop at end"
         sleep SLEEP
@@ -23,9 +21,10 @@ class SQA
     private
 
     def initialize database, nodes
-      @db    = database
-      @nodes = nodes
-      @alarm = Alarm.new
+      @db         = database
+      @nodes      = nodes
+      @alarm      = Alarm.new @db
+      @db_id_seen = 0
     end
   end
 

@@ -16,11 +16,11 @@ class SQA
     private
 
     def initialize
-      # this does not follow inode, if we change inode when generating
-      # /etc/hosts that needs to be added
       @list = get_list
       @inotify = INotify::Notifier.new
-      @inotify.watch(FILE, :modify) { @list = get_list }
+      @inotify.watch(File.dirname(FILE), :modify, :create) do |event|
+        @list = get_list if event.name == FILE.split('/').last
+      end
       run
     end
 
