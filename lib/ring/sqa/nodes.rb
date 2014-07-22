@@ -36,8 +36,8 @@ class SQA
     def entry_skip? entry
       return true unless entry.size > 2
       return true if entry.first.match /^\s*#/
-      return true if CFG.hosts.ignore.any?      { |re| entry[2].match Regexp.new(re) }
-      return true unless CFG.hosts.include.any? { |re| entry[2].match Regexp.new(re) }
+      return true if CFG.hosts.ignore.any?   { |re| entry[2].match Regexp.new(re) }
+      return true unless CFG.hosts.load.any? { |re| entry[2].match Regexp.new(re) }
 
       address = IPAddress.new(entry.first) rescue (return true)
       if CFG.ipv6?
