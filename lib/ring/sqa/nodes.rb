@@ -39,7 +39,7 @@ class SQA
       return true if CFG.hosts.ignore.any?      { |re| entry[2].match Regexp.new(re) }
       return true unless CFG.hosts.include.any? { |re| entry[2].match Regexp.new(re) }
 
-      address = IPAddress.new(entry.first) rescue true
+      address = IPAddress.new(entry.first) rescue return true
       if CFG.ipv6?
         return true if address.ipv4?
         return true if address == IPAddres.new(CFG.bind.ipv6)
