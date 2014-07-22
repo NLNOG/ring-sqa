@@ -8,6 +8,7 @@ class SQA
     INFLIGHT_WAIT = 1  # how long to wait for inflight records
     def run
       loop do
+        @db.purge
         @db_id_seen, records = @db.not_ok(@db_id_seen+1)
         sleep INFLIGHT_WAIT
         records.all.each do |record|

@@ -31,15 +31,19 @@ class SQA
       Ping.where{id > id}.where(:peer=>peer).count > 0
     end
 
+    def purge older_than=3600
+      Ping.where{time < (Time.now.utc-older_than).to_i}.delete
+    end
+
     private
 
     def initialize
       Sequel::Model.plugin :schema
       file = CFG.ipv6? ? 'ipv6.db' : 'ipv4.db'
       file = File.join CFG.directory, file
+      File.unlink file rescue nil # delete old database
       @db = Sequel.sqlite(file, :max_connections => 3, :pool_timeout => 60)
       require_relative 'database/model.rb'
-      Ping.where().delete  #start with empty database
     end
   end
 
