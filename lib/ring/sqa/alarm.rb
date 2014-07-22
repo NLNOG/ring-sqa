@@ -3,22 +3,12 @@ require_relative 'alarm/cfg'
 
 module Ring
 class SQA
-  MIN_ALARM = 2
 
   class Alarm
-    def set id, node
-      last_id = @last_id[node]
-      if last_id and @db.up_since?(last_id, node)
-        @count[node] = 1  # not a consequtive down, restarting
-      else
-        @count[node] += 1 # consequtive down, incrementing count
-      end
-      @last_id[node] = id
-      if @count[node] == MIN_ALARM
-        msg = "Raising alarm for node '#{node}'"
-        Log.debug msg
-        @methods.each { |alarm_method| alarm_method.send msg }
-      end
+    def set
+      msg = "Raising alarm"
+      Log.debug msg
+      @methods.each { |alarm_method| alarm_method.send msg }
     end
 
     private

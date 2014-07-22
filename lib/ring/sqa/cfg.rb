@@ -7,11 +7,12 @@ module Ring
     class NoConfig < StandardError; end
 
     Config = Asetus.new name: 'sqa', load: false, usrdir: Directory, cfgfile: 'main.conf'
-    Config.default.directory    = Directory
-    Config.default.debug        = false
-    Config.default.hosts.load   = %w( ring.nlnog.net )
-    Config.default.hosts.ignore = %w( infra.ring.nlnog.net )
-    Config.default.port         = 'ring'.to_i(36)/100
+    Config.default.directory          = Directory
+    Config.default.debug              = false
+    Config.default.hosts.load         = %w( ring.nlnog.net )
+    Config.default.hosts.ignore       = %w( infra.ring.nlnog.net )
+    Config.default.port               = 'ring'.to_i(36)/100
+    Config.default.analyzer.tolerance = 1.2
 
     begin
       Config.load

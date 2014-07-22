@@ -22,9 +22,9 @@ class SQA
       end
     end
 
-    def not_ok first_id
+    def nodes_down first_id
       max_id = (Ping.max(:id) or first_id)
-      [max_id, Ping.where(:id=>first_id..max_id).exclude(:result => 'ok')]
+      [max_id, Ping.distinct.where(:id=>first_id..max_id).exclude(:result => 'ok')]
     end
 
     def up_since? id, peer
