@@ -5,7 +5,7 @@ class Database
   class Ping < Sequel::Model
     set_schema do
       primary_key :id
-      Time        :time
+      Fixnum      :time
       String      :peer
       Fixnum      :latency
       String      :result
