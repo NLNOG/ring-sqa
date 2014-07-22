@@ -41,6 +41,9 @@ class SQA
     rescue Errno::ECONNREFUSED
       Log.warn "connection refused to '#{node}'"
       @db.update record.id, 'connection refused'
+    rescue Errno::ENETUNREACH
+      Log.warn "network unreachable to '#{node}'"
+      @db.update record.id, 'network unreachable'
     end
   end
 
