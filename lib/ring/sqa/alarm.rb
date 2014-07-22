@@ -6,9 +6,21 @@ class SQA
 
   class Alarm
     def set
-      msg = "Raising alarm"
-      Log.debug msg
-      @methods.each { |alarm_method| alarm_method.send msg }
+      if @alarm == false
+        @alarm = true
+        msg = "Raising alarm"
+        Log.debug msg
+        @methods.each { |alarm_method| alarm_method.send msg }
+      end
+    end
+
+    def clear
+      if @alarm == true
+        @alarm = false
+        msg = 'Clearing alarm'
+        Log.debug msg
+        @methods.each { |alarm_method| alarm_method.send msg }
+      end
     end
 
     private
@@ -19,8 +31,7 @@ class SQA
       if CFG.email.to?
         @methods << Email.new
       end
-      @count   = Hash.new 0
-      @last_id = Hash.new
+      @alarm  = false
     end
   end
 
