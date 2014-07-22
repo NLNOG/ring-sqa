@@ -9,7 +9,7 @@ class SQA
       if @alarm == false
         @alarm = true
         msg = "Raising alarm"
-        Log.debug msg
+        Log.info msg
         @methods.each { |alarm_method| alarm_method.send msg }
       end
     end
@@ -18,7 +18,7 @@ class SQA
       if @alarm == true
         @alarm = false
         msg = 'Clearing alarm'
-        Log.debug msg
+        Log.info msg
         @methods.each { |alarm_method| alarm_method.send msg }
       end
     end
