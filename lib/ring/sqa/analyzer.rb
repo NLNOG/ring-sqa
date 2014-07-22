@@ -41,7 +41,7 @@ class SQA
       @array = Array.new max_size, 99999
     end
     def push e
-      @array.shift if @array.size > @max_size-1
+      @array.shift
       @array.push e
     end
     def median of_first=27
