@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = 'ring-sqa'
-  s.version           = '0.0.3'
+  s.version           = '0.0.4'
   s.licenses          = ['Apache-2.0']
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti' ]
@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'rb-inotify', '~> 0.9'
   s.add_dependency 'sequel',     '~> 4.12'
   s.add_dependency 'sqlite3',    '~> 1.3'
-  s.add_dependency 'asetus',     '~> 0.1'
+  s.add_dependency 'asetus',     '~> 0.1', '>= 0.1.2'
 end

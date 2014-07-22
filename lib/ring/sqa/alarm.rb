@@ -1,4 +1,5 @@
 require_relative 'alarm/email'
+require_relative 'alarm/cfg'
 
 module Ring
 class SQA

@@ -6,9 +6,7 @@ module Ring
     class InvalidConfig < StandardError; end
     class NoConfig < StandardError; end
 
-    Config = Asetus.new name: 'sqa', load: false, usrdir: Directory
-    Config.default.email.to     = false
-    Config.default.email.from   = 'foo@example.com'
+    Config = Asetus.new name: 'sqa', load: false, usrdir: Directory, cfgfile: 'main.conf'
     Config.default.directory    = Directory
     Config.default.debug        = false
     Config.default.hosts.load   = %w( ring.nlnog.net )
@@ -26,6 +24,6 @@ module Ring
     CFG.bind.ipv4 = Socket::getaddrinfo(Socket.gethostname,"echo",Socket::AF_INET)[0][3]
     CFG.bind.ipv6 = Socket::getaddrinfo(Socket.gethostname,"echo",Socket::AF_INET6)[0][3]
 
-    raise NoConfig, 'edit /etc/ring-sqa/config' if Config.create
+    raise NoConfig, 'edit /etc/ring-sqa/main.conf' if Config.create
   end
 end
