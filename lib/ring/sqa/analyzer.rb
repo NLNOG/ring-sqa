@@ -51,8 +51,8 @@ class SQA
     end
     def exceed_median? last=3, tolerance=CFG.analyzer.tolerance
       first = @max_size-last
-      median_now = median
-      @array[first..-1].all? { |e| e > median_now*tolerance }
+      violate = (median+1)*tolerance
+      @array[first..-1].all? { |e| e > violate }
     end
   end
 
