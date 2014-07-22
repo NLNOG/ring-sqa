@@ -31,7 +31,9 @@ class SQA
 
     def initialize
       Sequel::Model.plugin :schema
-      @db = Sequel.sqlite(CFG[:db], :max_connections => 3, :pool_timeout => 60)
+      file = CFG.ipv6? ? 'ipv6.db' : 'ipv4.db'
+      file = File.join CFG.directory, file
+      @db = Sequel.sqlite(file, :max_connections => 3, :pool_timeout => 60)
       require_relative 'database/model.rb'
       Ping.where().delete  #start with empty database
     end

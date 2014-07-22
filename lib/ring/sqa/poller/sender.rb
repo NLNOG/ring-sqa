@@ -8,7 +8,7 @@ class SQA
     INTER_NODE_GAP = 0.01 # delay to sleep between each node
 
     def run
-      udp = UDPSocket.new
+      udp = udp_socket
       loop do
         loop_start = Time.now
         @nodes.list.each do |node|
@@ -37,7 +37,7 @@ class SQA
       Log.debug "Sending query to #{node}"
       record = @db.add peer: node
       msg    = [Time.now.utc.to_f.to_s, record.id].join ' '
-      udp.send msg, 0, node, PORT
+      udp.send msg, 0, node, port
     rescue Errno::ECONNREFUSED
       Log.warn "connection refused to '#{node}'"
       @db.update record.id, 'connection refused'

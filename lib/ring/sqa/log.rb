@@ -1,7 +1,7 @@
 module Ring
 class SQA
 
-  if SQA::CFG[:debug]
+  if CFG.debug?
     require 'logger'
     Log = Logger.new STDERR
   else

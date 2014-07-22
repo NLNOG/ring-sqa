@@ -8,9 +8,9 @@ class Alarm
     SERVER = 'localhost'
 
     def send msg
-      @msg = msg
-      @to   = CFG[:email_to]
-      @from = CFG[:email_from]
+      @msg  = msg
+      @from = CFG.email.from
+      @to   = [CFG.email.to].flatten
       send_email compose_email
     end
 
@@ -22,7 +22,7 @@ class Alarm
     def compose_email
       mail = []
       mail << 'From: '     + @from
-      mail << 'To: '       + @to
+      mail << 'To: '       + @to.join(', ')
       mail << 'Subject: '  + @msg
       mail << 'List-Id: '  + 'ring-sqa <sqa.ring.nlnog.net>'
       mail << 'X-Mailer: ' + 'ring-sqa'

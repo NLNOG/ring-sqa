@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'rb-inotify', '~> 0.9'
   s.add_dependency 'sequel',     '~> 4.12'
   s.add_dependency 'sqlite3',    '~> 1.3'
+  s.add_dependency 'asetus',     '~> 0.1'
 end

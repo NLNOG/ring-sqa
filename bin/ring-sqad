@@ -5,5 +5,5 @@ begin
   Ring::SQA::CLI.new
 rescue => error
   warn error.to_s
-  raise if Ring::SQA::CFG[:debug]
+  raise if Ring::SQA::CFG.debug
 end

@@ -6,8 +6,8 @@ class SQA
   class Receiver < Poller
 
     def run
-      udp = UDPSocket.new
-      udp.bind BIND_ADDRESS, PORT+1
+      udp = udp_socket
+      udp.bind address, port+1
       loop { receive udp }
     end
 

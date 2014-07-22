@@ -2,10 +2,21 @@ module Ring
 class SQA
 
   class Poller
-    PORT         = 'ring'.to_i(36)/100
     MAX_READ     = 500
-    BIND_ADDRESS = CFG[:address]
+
+    def address
+      CFG.ipv6? ? CFG.bind.ipv6 : CFG.bind.ipv4
+    end
+
+    def port
+      CFG.port.to_i
+    end
+
+    def udp_socket
+      CFG.ipv6? ? UDPSocket.new(Socket::AF_INET6) : UDPSocket.new
+    end
   end
+
 
 end
 end

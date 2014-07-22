@@ -1,12 +1,11 @@
 require 'rb-inotify'
+require 'ipaddr'
 
 module Ring
 class SQA
 
   class Nodes
     FILE   = '/etc/hosts'
-    #DOMAIN = /ring.nlnog.net/
-    DOMAIN = /pooper/
     attr_reader :list
 
     def run
@@ -28,12 +27,29 @@ class SQA
       list = []
       File.read(FILE).lines.each do |line|
         entry = line.split(/\s+/)
-        next unless entry.size > 2 and entry[2].match DOMAIN
-        next if entry[0] == CFG[:address]
-        list << entry[0]
+        next if entry_skip? entry
+        list << entry.first
       end
       list.sort
     end
+
+    def entry_skip? entry
+      return true unless entry.size > 2
+      return true if entry.first.match /^\s*#/
+      return true if CFG.hosts.ignore.any?      { |re| entry[2].match Regexp.new(re) }
+      return true unless CFG.hosts.include.any? { |re| entry[2].match Regexp.new(re) }
+
+      address = IPAddress.new(entry.first) rescue true
+      if CFG.ipv6?
+        return true if address.ipv4?
+        return true if address == IPAddres.new(CFG.bind.ipv6)
+      else
+        return true if address.ipv6?
+        return true if address == IPAddres.new(CFG.bind.ipv4)
+      end
+      false
+    end
+
   end
 
 end

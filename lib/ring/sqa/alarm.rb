@@ -14,7 +14,9 @@ class SQA
       end
       @last_id[node] = id
       if @count[node] == MIN_ALARM
-        Log.debug "Raising alarm for node '#{node}'"
+        msg = "Raising alarm for node '#{node}'"
+        Log.debug msg
+        @methods.each { |alarm_method| alarm_method.send msg }
       end
     end
 
@@ -22,8 +24,10 @@ class SQA
 
     def initialize database
       @db      = database
-      email    = Email.new
-      @methods = [email]
+      @methods = []
+      if CFG.email.to?
+        @methods << Email.new
+      end
       @count   = Hash.new 0
       @last_id = Hash.new
     end

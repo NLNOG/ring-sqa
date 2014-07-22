@@ -21,7 +21,8 @@ class SQA
 
     def initialize
       _args, @opts = opts_parse
-      SQA::CFG[:debug] = @opts.debug?
+      CFG.debug = @opts.debug?
+      CFG.ipv6  = @opts.ipv6?
       require_relative 'log'
       Log.level = Logger::DEBUG if @opts.debug?
       run
@@ -31,13 +32,15 @@ class SQA
       slop = Slop.new(:help=>true) do
         banner 'Usage: ring-sqad [options]'
         on 'd', '--debug', 'turn on debugging'
+        on '6', '--ipv6',  'use ipv6 instead of ipv4'
         on '--daemonize',  'run in background'
       end
       [slop.parse!, slop]
     end
 
     def crash error
-      open CFG[:crash], 'w' do |file|
+      file = File.join CFG.directory, 'crash.txt'
+      open file, 'w' do |file|
         file.puts error.class.to_s + ' => ' + error.message
         file.puts '-' * 70
         file.puts error.backtrace
