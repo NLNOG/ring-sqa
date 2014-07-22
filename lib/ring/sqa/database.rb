@@ -6,7 +6,7 @@ class SQA
 
   class Database
     def add record
-      record[:time]    = Time.now.utc.to_s
+      record[:time]    = Time.now.utc.to_i
       record[:latency] = nil
       record[:result]  = 'no response'
       Log.debug "adding '#{record}' to database"
