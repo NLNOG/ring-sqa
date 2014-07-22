@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = 'ring-sqa'
-  s.version           = '0.0.6'
+  s.version           = '0.0.7'
   s.licenses          = ['Apache-2.0']
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti' ]
