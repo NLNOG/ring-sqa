@@ -36,6 +36,7 @@ class SQA
   end
 
   class AnalyzeBuffer
+    attr_reader :array
     def initialize max_size=30
       @max_size = max_size
       init_nodes = Array.new 99, ''

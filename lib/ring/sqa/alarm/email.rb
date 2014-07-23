@@ -11,7 +11,8 @@ class Alarm
       @from    = CFG.email.from
       @to      = [CFG.email.to].flatten
       prefix   = CFG.email.prefix? ? CFG.email.prefix : ''
-      @subject = prefix + msg
+      @subject = prefix + msg[:short]
+      @body    = msg[:long]
       send_email compose_email
     end
 
@@ -27,7 +28,9 @@ class Alarm
       mail << 'Subject: '  + @subject
       mail << 'List-Id: '  + 'ring-sqa <sqa.ring.nlnog.net>'
       mail << 'X-Mailer: ' + 'ring-sqa'
-      mail.join("\n")
+      mail << ''
+      mail = mail.join("\n")
+      mail+@body
     end
 
     def send_email email

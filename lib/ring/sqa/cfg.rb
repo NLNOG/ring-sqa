@@ -14,6 +14,7 @@ module Ring
     Config.default.port               = 'ring'.to_i(36)/100
     Config.default.analyzer.tolerance = 1.2
     Config.default.timeout            = 5
+    Config.default.nodes_json         = '/etc/nodes.json'
 
     begin
       Config.load
