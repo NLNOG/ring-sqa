@@ -1,9 +1,7 @@
-require 'pp'
 require_relative 'alarm/email'
 require_relative 'alarm/cfg'
 require_relative 'mtr'
 require_relative 'nodes_json'
-Encoding.default_internal = Encoding::UTF_8
 
 module Ring
 class SQA
@@ -40,20 +38,30 @@ class SQA
 
     def compose_message alarm_buffer
       msg = {short: 'Raising alarm'}
-      exceeding_nodes = alarm_buffer.exceeding_nodes.join ', '
+      exceeding_nodes = alarm_buffer.exceeding_nodes
       nodes = NodesJSON.new
+
       nodes_list = ''
       exceeding_nodes.each do |node|
         json = nodes.get node
-        nodes_list << "- %30s %14s %5s %2s\n" % [json['hostname'], node, json['asn'], json['countrycode']]
+        nodes_list << "- %-30s %14s AS%5s %2s\n" % [json['hostname'], node, json['asn'], json['countrycode']]
       end
+
       mtr_list = ''
       exceeding_nodes.sample(3).each do |node|
         json = nodes.get node
-        mtr_list << "%2s %5s\n" % [json['countrycode'], json['asn']]
+        mtr_list << "%-30s AS%5s (%2s)\n" % [json['hostname'], json['asn'], json['countrycode']]
         mtr_list << MTR.run(node)
         mtr_list << "\n"
       end
+
+      buffer_list = ''
+      time = 29
+      alarm_buffer.array[0..28].each do |ary|
+        buffer_list << "%2s min ago %3s measurement failed\n" % [time, ary.size]
+        time -= 1
+      end
+      buffer_list <<   "  right now %3s measurement failed\n" % [alarm_buffer.array[29].size]
 
       msg[:long] = <<EOF
 This is an automated alert from the distributed partial outage monitoring system "RING SQA".
@@ -70,7 +78,7 @@ As a debug starting point 3 traceroutes were launched right after detecting the 
 
 An alarm is raised under the following conditions: every 30 seconds your node pings all other nodes. The amount of nodes that cannot be reached is stored in a circular buffer, with each element representing a minute of measurements. In the event that the last three minutes are #{Ring::SQA::CFG.analyzer.tolerance} above the median of the previous 27 measurement slots, a partial outage is assumed. The ring buffer's output is as following:
 
-#{PP.pp(alarm_buffer.array, '')}
+#{buffer_list}
 
 Kind regards,
 

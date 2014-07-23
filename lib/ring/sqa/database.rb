@@ -9,13 +9,13 @@ class SQA
       record[:time]    = Time.now.utc.to_i
       record[:latency] = nil
       record[:result]  = 'no response'
-      Log.debug "adding '#{record}' to database"
+      Log.debug "adding '#{record}' to database" if CFG.debug?
       Ping.new(record).save
     end
 
     def update record_id, result, latency=nil
       if record = Ping[record_id]
-        Log.debug "updating record_id '#{record_id}' with result '#{result}' and latency '#{latency}'"
+        Log.debug "updating record_id '#{record_id}' with result '#{result}' and latency '#{latency}'" if CFG.debug?
         record.update(:result=>result, :latency=>latency)
       else
         Log.error "wanted to update record_id #{record_id}, but it does not exist"

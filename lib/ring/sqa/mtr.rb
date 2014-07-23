@@ -6,7 +6,7 @@ class SQA
 
   class MTR
     BIN  = 'mtr'
-    ARGS = %w(-w -c1 -n -r)
+    ARGS = %w(-i0.5 -c5 -r -w -n)
     def self.run host
       MTR.new.run host
     end

@@ -32,7 +32,7 @@ class SQA
     end
 
     def query node, udp
-      Log.debug "Sending query to #{node}"
+      Log.debug "Sending query to #{node}" if CFG.debug?
       record = @db.add peer: node
       msg    = [Time.now.utc.to_f.to_s, record.id].join ' '
       udp.send msg, 0, node, port

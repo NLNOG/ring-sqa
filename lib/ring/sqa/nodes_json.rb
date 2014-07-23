@@ -5,7 +5,7 @@ class SQA
 
   class NodesJSON
     def get node
-      @nodes[node]
+      (@nodes[node] or {})
     rescue
       {}
     end
