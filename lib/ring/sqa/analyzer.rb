@@ -13,8 +13,8 @@ class SQA
         @db_id_seen, records = @db.nodes_down(@db_id_seen+1)
         sleep INFLIGHT_WAIT
         records = records.all
-        @buffer.push records.size
-        @buffer.exceed_median? ? @alarm.set : @alarm.clear
+        @buffer.push records.map { |record| record.peer }
+        @buffer.exceed_median? ? @alarm.set(@buffer.exceeding_nodes) : @alarm.clear
         delay = INTERVAL-(Time.now-start)
         if delay > 0
           sleep delay
@@ -38,26 +38,29 @@ class SQA
   class AnalyzeBuffer
     def initialize max_size=30
       @max_size = max_size
-      @array = Array.new max_size, 99999
+      init_nodes = Array.new 99, ''
+      @array = Array.new max_size, init_nodes
     end
     def push e
       @array.shift
       @array.push e
-      Log.debug "Analyzer Buffer: '#{@array.to_s}'"
     end
     def median of_first=27
       of_first = of_first-1
       middle   = of_first/2
-      @array[0..of_first].sort[middle]
+      node_count[0..of_first].sort[middle]
     end
     def exceed_median? last=3, tolerance=CFG.analyzer.tolerance
       first = @max_size-last
-      my_median = median
-      violate = (my_median+1)*tolerance
-      Log.debug "my_median is: '#{my_median}' and violate is: '#{violate}'"
-      exceed = @array[first..-1].all? { |e| e > violate }
-      Log.debug "exceed_median returns: '#{exceed.inspect}'"
-      exceed
+      violate = (median+1)*tolerance
+      node_count[first..-1].all? { |e| e > violate }
+    end
+    def node_count
+      @array.map { |nodes| nodes.size }
+    end
+    def exeeding_nodes
+      exceed = @array[27] & @array[28] & @array[29]
+      exceed - @array[0..26].flatten.uniq
     end
   end
 

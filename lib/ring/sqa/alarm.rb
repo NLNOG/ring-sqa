@@ -5,10 +5,11 @@ module Ring
 class SQA
 
   class Alarm
-    def set
+    def set exceeding_nodes
       if @alarm == false
         @alarm = true
-        msg = "Raising alarm"
+        exceeding_nodes = exceeding_nodes.join (',')
+        msg = "Raising alarm, nodes #{exceeding_nodes} became unreachable"
         Log.info msg
         @methods.each { |alarm_method| alarm_method.send msg }
       end
