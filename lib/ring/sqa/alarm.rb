@@ -1,8 +1,10 @@
+require 'pp'
 require_relative 'alarm/email'
 require_relative 'alarm/cfg'
 require_relative 'mtr'
 require_relative 'nodes_json'
-require_relative 'pp'
+Encoding.default_internal = Encoding::UTF_8
+
 module Ring
 class SQA
 
@@ -54,14 +56,14 @@ class SQA
       end
 
       msg[:long] = <<EOF
-This is an automated alert from the distributed partial outage monitoring system "RING SQA". 
+This is an automated alert from the distributed partial outage monitoring system "RING SQA".
 
 At #{Time.now.utc} the following measurements were analysed as indicating that there is a high probability your NLNOG RING node cannot reach the entire internet. Possible causes could be an outage in your upstream's or peer's network.
 
 The following nodes previously were reachable, but became unreachable over the course of the last 3 minutes:
 
 #{nodes_list}
- 
+
 As a debug starting point 3 traceroutes were launched right after detecting the event, they might assist in pinpointing what broke:
 
 #{mtr_list}

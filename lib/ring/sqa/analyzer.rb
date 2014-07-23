@@ -4,7 +4,7 @@ module Ring
 class SQA
 
   class Analyzer
-    INTERVAL      = 60 # how often to run analyze loop
+    INTERVAL      = 10 # how often to run analyze loop
     INFLIGHT_WAIT = 1  # how long to wait for inflight records
     def run
       loop do
