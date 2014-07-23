@@ -43,16 +43,21 @@ class SQA
     def push e
       @array.shift
       @array.push e
+      Log.debug "Analyzer Buffer: '#{@array.to_s}'"
     end
     def median of_first=27
       of_first = of_first-1
       middle   = of_first/2
-      @array[0..of_first][middle]
+      @array[0..of_first].sort[middle]
     end
     def exceed_median? last=3, tolerance=CFG.analyzer.tolerance
       first = @max_size-last
-      violate = (median+1)*tolerance
-      @array[first..-1].all? { |e| e > violate }
+      my_median = median
+      violate = (my_median+1)*tolerance
+      Log.debug "my_median is: '#{my_median}' and violate is: '#{violate}'"
+      exceed = @array[first..-1].all? { |e| e > violate }
+      Log.debug "exceed_median returns: '#{exceed.inspect}'"
+      exceed
     end
   end
 
