@@ -14,7 +14,7 @@ class SQA
         sleep INFLIGHT_WAIT
         records = records.all
         @buffer.push records.map { |record| record.peer }
-        @buffer.exceed_median? ? @alarm.set(@buffer.exceeding_nodes) : @alarm.clear
+        @buffer.exceed_median? ? @alarm.set(@buffer) : @alarm.clear
         delay = INTERVAL-(Time.now-start)
         if delay > 0
           sleep delay
@@ -58,7 +58,7 @@ class SQA
     def node_count
       @array.map { |nodes| nodes.size }
     end
-    def exeeding_nodes
+    def exceeding_nodes
       exceed = @array[27] & @array[28] & @array[29]
       exceed - @array[0..26].flatten.uniq
     end
