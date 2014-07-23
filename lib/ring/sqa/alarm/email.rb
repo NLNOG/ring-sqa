@@ -8,9 +8,10 @@ class Alarm
     SERVER = 'localhost'
 
     def send msg
-      @msg  = msg
-      @from = CFG.email.from
-      @to   = [CFG.email.to].flatten
+      @from    = CFG.email.from
+      @to      = [CFG.email.to].flatten
+      prefix   = CFG.email.prefix? ? CFG.email.prefix : ''
+      @subject = prefix + msg
       send_email compose_email
     end
 
@@ -23,7 +24,7 @@ class Alarm
       mail = []
       mail << 'From: '     + @from
       mail << 'To: '       + @to.join(', ')
-      mail << 'Subject: '  + @msg
+      mail << 'Subject: '  + @subject
       mail << 'List-Id: '  + 'ring-sqa <sqa.ring.nlnog.net>'
       mail << 'X-Mailer: ' + 'ring-sqa'
       mail.join("\n")
