@@ -13,6 +13,7 @@ module Ring
     Config.default.hosts.ignore       = %w( infra.ring.nlnog.net )
     Config.default.port               = 'ring'.to_i(36)/100
     Config.default.analyzer.tolerance = 1.2
+    Config.default.timeout            = 5
 
     begin
       Config.load
