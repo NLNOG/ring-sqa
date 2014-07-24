@@ -23,10 +23,8 @@ class SQA
           curl.follow_location = true
           curl.timeout = 10
       end
-      out = http.last_effective_url
-      rescue out
+      http.last_effective_url
     end
   end
-  puts Paste.add "hoi"
 end
 end

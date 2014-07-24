@@ -1,5 +1,3 @@
-require_relative 'paste'
-
 module Ring
 class SQA
 class Alarm

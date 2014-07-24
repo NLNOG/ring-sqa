@@ -2,6 +2,7 @@ require_relative 'alarm/email'
 require_relative 'alarm/udp2irc'
 require_relative 'alarm/cfg'
 require_relative 'mtr'
+require_relative 'paste'
 require_relative 'nodes_json'
 
 module Ring
