@@ -20,7 +20,7 @@ class SQA
     def clear
       if @alarm == true
         @alarm = false
-        msg = { short: "#{hostname}: clearing alarm" }
+        msg = { short: "#{@hostname}: clearing alarm" }
         msg[:long] = msg[:short]
         Log.info msg[:short]
         @methods.each { |alarm_method| alarm_method.send msg }
@@ -40,7 +40,7 @@ class SQA
 
     def compose_message alarm_buffer
       exceeding_nodes = alarm_buffer.exceeding_nodes
-      msg = {short: "#{hostname}: raising alarm - #{exceeding_nodes.size} new nodes down"}
+      msg = {short: "#{@hostname}: raising alarm - #{exceeding_nodes.size} new nodes down"}
       nodes = NodesJSON.new
 
       nodes_list = ''
