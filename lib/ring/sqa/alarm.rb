@@ -62,7 +62,8 @@ class SQA
       time = alarm_buffer.array.size-1
       alarm_buffer.array.each do |ary|
         buffer_list << "%2s min ago %3s measurements failed" % [time, ary.size/2]
-        buffer_list << time < 3 ? " (raised alarm)\n" : " (baseline)\n"
+        type = time.to_i < 3 ? " (raised alarm)\n" : " (baseline)\n"
+        buffer_list << type
         time -= 1
       end
 
