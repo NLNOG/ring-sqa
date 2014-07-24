@@ -58,7 +58,7 @@ class SQA
       end
 
       buffer_list = ''
-      time = alarm_buffer.size-1
+      time = alarm_buffer.array.size-1
       alarm_buffer.array.each do |ary|
         buffer_list << "%2s min ago %3s measurements failed\n" % [time, ary.size/2]
         time -= 1

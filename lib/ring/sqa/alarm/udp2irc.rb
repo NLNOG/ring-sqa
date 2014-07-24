@@ -6,7 +6,7 @@ class Alarm
     def send message, channel=CFG.irc.channel
       msg = [@password, channel, message[:short]].join ' '
       msg += "\0" while msg.size % 16 > 0
-      UDPSocket.new.send msg, 0, HOST, PORT
+      UDPSocket.new.send msg, 0, @host, @port.to_i
     end
 
     private
