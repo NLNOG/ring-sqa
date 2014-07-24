@@ -6,6 +6,10 @@ class SQA
     Config.default.email.to     = false
     Config.default.email.from   = 'foo@example.com'
     Config.default.email.prefix = false
+    Config.default.irc.host     = '213.136.8.179'
+    Config.default.irc.port     = 5502
+    Config.default.irc.password = false
+    Config.default.irc.channel  = '#ring'
 
     begin
       Config.load

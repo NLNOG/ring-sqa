@@ -1,4 +1,5 @@
 require_relative 'alarm/email'
+require_relative 'alarm/irc2udp'
 require_relative 'alarm/cfg'
 require_relative 'mtr'
 require_relative 'nodes_json'
@@ -19,7 +20,7 @@ class SQA
     def clear
       if @alarm == true
         @alarm = false
-        msg = { short: 'Clearing alarm' }
+        msg = { short: "#{hostname}: clearing alarm" }
         Log.info msg[:short]
         @methods.each { |alarm_method| alarm_method.send msg }
       end
@@ -28,17 +29,17 @@ class SQA
     private
 
     def initialize database
-      @db      = database
-      @methods = []
-      if CFG.email.to?
-        @methods << Email.new
-      end
-      @alarm  = false
+      @db       = database
+      @methods  = []
+      @methods  << Email.new   if CFG.email.to?
+      @methods  << UDP2IRC.new if CFG.irc.password?
+      @alarm    = false
+      @hostname = (Socket.gethostname rescue 'anonymous')
     end
 
     def compose_message alarm_buffer
-      msg = {short: 'Raising alarm'}
       exceeding_nodes = alarm_buffer.exceeding_nodes
+      msg = {short: "#{hostname}: raising alarm - #{exceeding_nodes.size} new nodes down"}
       nodes = NodesJSON.new
 
       nodes_list = ''
