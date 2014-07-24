@@ -56,12 +56,11 @@ class SQA
       end
 
       buffer_list = ''
-      time = 29
-      alarm_buffer.array[0..28].each do |ary|
-        buffer_list << "%2s min ago %3s measurement failed\n" % [time, ary.size]
+      time = alarm_buffer.size-1
+      alarm_buffer.array.each do |ary|
+        buffer_list << "%2s min ago %3s measurements failed\n" % [time, ary.size/2]
         time -= 1
       end
-      buffer_list <<   "  right now %3s measurement failed\n" % [alarm_buffer.array[29].size]
 
       msg[:long] = <<EOF
 This is an automated alert from the distributed partial outage monitoring system "RING SQA".
