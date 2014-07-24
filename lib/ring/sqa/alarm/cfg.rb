@@ -8,7 +8,7 @@ class SQA
     Config.default.email.prefix = false
     Config.default.irc.host     = '213.136.8.179'
     Config.default.irc.port     = 5502
-    Config.default.irc.password = false
+    Config.default.irc.password = 'shough2oChoo'
     Config.default.irc.channel  = '#ring'
 
     begin
