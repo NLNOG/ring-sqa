@@ -1,5 +1,5 @@
 require_relative 'alarm/email'
-require_relative 'alarm/irc2udp'
+require_relative 'alarm/udp2irc'
 require_relative 'alarm/cfg'
 require_relative 'mtr'
 require_relative 'nodes_json'
