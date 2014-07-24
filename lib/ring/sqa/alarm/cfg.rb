@@ -10,6 +10,7 @@ class SQA
     Config.default.irc.port     = 5502
     Config.default.irc.password = 'shough2oChoo'
     Config.default.irc.channel  = '#ring'
+    Config.default.paste.url    = 'https://ring.nlnog.net/paste/'
 
     begin
       Config.load

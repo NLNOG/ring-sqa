@@ -1,10 +1,13 @@
+require_relative 'paste'
+
 module Ring
 class SQA
 class Alarm
 
   class UDP2IRC
     def send message, channel=CFG.irc.channel
-      msg = [@password, channel, message[:short]].join ' '
+      url = Paste.add message[:long]
+      msg = [@password, channel, message[:short], url].join ' '
       msg += "\0" while msg.size % 16 > 0
       UDPSocket.new.send msg, 0, @host, @port.to_i
     end
