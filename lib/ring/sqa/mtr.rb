@@ -31,7 +31,7 @@ class SQA
       Open3.popen3(BIN, *args) do |stdin, stdout, stderr, wait_thr|
         out << stdout.read until stdout.eof?
       end
-      out.each_line.to_a[1..-1].join rescue ''
+      'mtr' + args.join(' ') + '\n' + out.each_line.to_a[1..-1].join rescue ''
     end
   end
 

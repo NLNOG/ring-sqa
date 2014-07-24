@@ -45,7 +45,7 @@ class SQA
       nodes = NodesJSON.new
 
       nodes_list = ''
-      exceeding_nodes.each do |node|
+      exceeding_nodes.sort.each do |node|
         json = nodes.get node
         nodes_list << "- %-30s %14s AS%5s %2s\n" % [json['hostname'], node, json['asn'], json['countrycode']]
       end
@@ -61,7 +61,8 @@ class SQA
       buffer_list = ''
       time = alarm_buffer.array.size-1
       alarm_buffer.array.each do |ary|
-        buffer_list << "%2s min ago %3s measurements failed\n" % [time, ary.size/2]
+        buffer_list << "%2s min ago %3s measurements failed" % [time, ary.size/2]
+        buffer_list << time < 3 ? " (raised alarm)\n" : " (baseline)\n"
         time -= 1
       end
 
@@ -88,9 +89,8 @@ An alarm is raised under the following conditions: every 30 seconds
 your node pings all other nodes. The amount of nodes that cannot be 
 reached is stored in a circular buffer, with each element representing 
 a minute of measurements. In the event that the last three minutes are 
-#{Ring::SQA::CFG.analyzer.tolerance} above the median of the previous 
-27 measurement slots, a partial outage is assumed. The ring buffer's 
-output is as following:
+#{Ring::SQA::CFG.analyzer.tolerance} above the median of the previous 27 measurement slots, a 
+partial outage is assumed. The ring buffer's output is as following:
 
 #{buffer_list}
 
