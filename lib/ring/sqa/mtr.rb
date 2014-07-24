@@ -6,13 +6,13 @@ class SQA
 
   class MTR
     BIN  = 'mtr'
-    ARGS = %w(-i0.5 -c5 -r -w -n)
     def self.run host
       MTR.new.run host
     end
 
-    def run host, args=ARGS
+    def run host, args=nil
       Timeout::timeout(@timeout) do
+        args ||= CFG.mtr.args.split(' ')
         mtr host, args
       end
     rescue Timeout::Error
@@ -21,7 +21,7 @@ class SQA
 
     private
 
-    def initialize timeout=CFG.timeout
+    def initialize timeout=CFG.mtr.timeout
       @timeout = timeout
     end
 

@@ -13,8 +13,9 @@ module Ring
     Config.default.hosts.ignore       = %w( infra.ring.nlnog.net )
     Config.default.port               = 'ring'.to_i(36)/100
     Config.default.analyzer.tolerance = 1.2
-    Config.default.timeout            = 15
     Config.default.nodes_json         = '/etc/ring/nodes.json'
+    Config.default.mtr.args           = '-i0.5 -c5 -r -w -n'
+    Config.default.mtr.timeout        = 15
 
     begin
       Config.load
