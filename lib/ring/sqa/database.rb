@@ -39,10 +39,15 @@ class SQA
 
     def initialize
       Sequel::Model.plugin :schema
-      file = CFG.ipv6? ? 'ipv6.db' : 'ipv4.db'
-      file = File.join CFG.directory, file
-      File.unlink file rescue nil # delete old database
-      @db = Sequel.sqlite(file, :max_connections => 3, :pool_timeout => 60)
+      sequel_opts = { max_connections: 3, pool_timout: 60 }
+      if CFG.ram_database?
+        @db = Sequel.sqlite sequel_opts
+      else
+        file = CFG.ipv6? ? 'ipv6.db' : 'ipv4.db'
+        file = File.join CFG.directory, file
+        File.unlink file rescue nil # delete old database
+        @db = Sequel.sqlite file, sequel_opts
+      end
       require_relative 'database/model.rb'
     end
   end

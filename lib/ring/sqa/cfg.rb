@@ -16,6 +16,7 @@ module Ring
     Config.default.nodes_json         = '/etc/ring/nodes.json'
     Config.default.mtr.args           = '-i0.5 -c5 -r -w -n'
     Config.default.mtr.timeout        = 15
+    Config.default.ram_database       = false
 
     begin
       Config.load
