@@ -1,5 +1,4 @@
-require 'curb'
-require 'timeout'
+require 'net/http'
 
 module Ring
 class SQA
@@ -17,13 +16,14 @@ class SQA
     private
 
     def paste string, url
-      http = Curl::Easy.http_post(url,
-                                  Curl::PostField.content('ttl', '604800'),
-                                  Curl::PostField.content('content', string)) do |curl|
-          curl.follow_location = true
-          curl.timeout = 10
-      end
-      http.last_effective_url
+        uri = URI.parse url
+        https = Net::HTTP.new(uri.host, uri.port)
+        https.use_ssl = true
+        request = Net::HTTP::Post.new(uri.path)
+        request.set_form_data({'content' => string,
+                               'ttl' => '608400'})
+        response = https.request request
+        "https://" + uri.host + response['location']
     end
   end
 end
