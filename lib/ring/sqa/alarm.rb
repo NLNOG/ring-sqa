@@ -45,9 +45,9 @@ class SQA
       nodes = NodesJSON.new
 
       nodes_list = ''
-      exceeding_nodes.sort!.each do |node|
+      exceeding_nodes.each do |node|
         json = nodes.get node
-        nodes_list << "- %-30s %14s AS%5s %2s\n" % [json['hostname'], node, json['asn'], json['countrycode']]
+        nodes_list << "- %-30s %14s  AS %5s  %2s\n" % [json['hostname'], node, json['asn'], json['countrycode']]
       end
 
       mtr_list = ''
