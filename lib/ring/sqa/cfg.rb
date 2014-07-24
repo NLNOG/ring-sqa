@@ -17,6 +17,7 @@ module Ring
     Config.default.mtr.args           = '-i0.5 -c5 -r -w -n'
     Config.default.mtr.timeout        = 15
     Config.default.ram_database       = false
+    Config.default.paste.url          = 'https://ring.nlnog.net/paste/'
 
     begin
       Config.load
