@@ -38,31 +38,30 @@ class SQA
 
   class AnalyzeBuffer
     attr_reader :array
-    def initialize nodes_count, max_size=30
-      @max_size = max_size
+    def initialize nodes_count, max_size=30, median_of=27
+      @max_size  = max_size
+      @median_of = median_of
       init_nodes = Array.new nodes_count * 2, ''
-      @array = Array.new max_size, init_nodes
+      @array     = Array.new max_size, init_nodes
     end
     def push e
       @array.shift
       @array.push e
     end
-    def median of_first=27
-      of_first = of_first-1
-      middle   = of_first/2
-      node_count[0..of_first].sort[middle]
+    def median
+      last   = @median_of-1
+      node_count[0..last].sort[last/2]
     end
-    def exceed_median? last=3, tolerance=CFG.analyzer.tolerance
-      first = @max_size-last
+    def exceed_median? tolerance=CFG.analyzer.tolerance
       violate = (median+1)*tolerance
-      node_count[first..-1].all? { |e| e > violate }
+      node_count[@median_of..-1].all? { |e| e > violate }
     end
     def node_count
       @array.map { |nodes| nodes.size }
     end
     def exceeding_nodes
-      exceed = @array[27] & @array[28] & @array[29]
-      exceed - @array[0..26].flatten.uniq
+      exceed = @array[@median_of..-1].inject :&
+      exceed - @array[0..@median_of-1].flatten.uniq
     end
   end
 
