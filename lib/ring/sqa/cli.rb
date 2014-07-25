@@ -23,6 +23,7 @@ class SQA
       _args, @opts = opts_parse
       CFG.debug = @opts.debug?
       CFG.ipv6  = @opts.ipv6?
+      CFG.fake  = @opts.fake?
       require_relative 'log'
       Log.level = Logger::DEBUG if @opts.debug?
       run
@@ -33,6 +34,7 @@ class SQA
         banner 'Usage: ring-sqad [options]'
         on 'd', '--debug', 'turn on debugging'
         on '6', '--ipv6',  'use ipv6 instead of ipv4'
+        on '--fake',       'initialize analyzebuffer with 0 nodes'
         on '--daemonize',  'run in background'
       end
       [slop.parse!, slop]
