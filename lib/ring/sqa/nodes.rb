@@ -1,29 +1,34 @@
 require 'rb-inotify'
 require 'ipaddr'
+require 'json'
 
 module Ring
 class SQA
 
   class Nodes
-    FILE   = '/etc/hosts'
-    attr_reader :list
+    FILE = '/etc/hosts'
+    attr_reader :all
 
     def run
       Thread.new { @inotify.run }
     end
 
+    def get node
+      (@all[node] or {})
+    end
+
     private
 
     def initialize
-      @list = get_list
+      @all = read_nodes
       @inotify = INotify::Notifier.new
       @inotify.watch(File.dirname(FILE), :modify, :create) do |event|
-        @list = get_list if event.name == FILE.split('/').last
+        @all = read_nodes if event.name == FILE.split('/').last
       end
       run
     end
 
-    def get_list
+    def read_nodes
       Log.info "loading #{FILE}"
       list = []
       File.read(FILE).lines.each do |line|
@@ -31,12 +36,41 @@ class SQA
         next if entry_skip? entry
         list << entry.first
       end
-      list.sort
+      nodes_hash list
+    rescue => error
+      Log.warn "#{error.class} raised with message '#{error.message}' while generating nodes list"
+      @all
     end
+
+    def nodes_hash ips, file=CFG.nodes_json
+      nodes = {}
+      json = JSON.load File.read(file)
+      json['results']['nodes'].each do |node|
+        addr = CFG.ipv6? ? node['ipv6'] : node['ipv4']
+        next unless ips.include? addr
+        nodes[addr] = node
+      end
+      json_to_nodes_hash nodes
+    end
+
+    def json_to_nodes_hash from_json
+      nodes= {}
+      from_json.each do |ip, json|
+        node = {
+          name: json['hostname'],
+          ip:   ip,
+          as:   json['asn'],
+          cc:   json['countrycode'],
+        }
+        nodes[ip] = node
+      end
+      nodes
+    end
+
 
     def entry_skip? entry
       return true unless entry.size > 2
-      return true if entry.first.match /^\s*#/
+      return true if entry.first.match(/^\s*#/)
       return true if CFG.hosts.ignore.any?   { |re| entry[2].match Regexp.new(re) }
       return true unless CFG.hosts.load.any? { |re| entry[2].match Regexp.new(re) }
 
@@ -50,7 +84,6 @@ class SQA
       end
       false
     end
-
   end
 
 end

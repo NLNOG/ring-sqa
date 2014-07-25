@@ -9,7 +9,7 @@ class SQA
       udp = udp_socket
       loop do
         loop_start = Time.now
-        @nodes.list.each do |node|
+        @nodes.all.each do |node, _|
           query node, udp
           sleep INTER_NODE_GAP
         end

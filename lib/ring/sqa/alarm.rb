@@ -3,7 +3,6 @@ require_relative 'alarm/udp2irc'
 require_relative 'alarm/cfg'
 require_relative 'mtr'
 require_relative 'paste'
-require_relative 'nodes_json'
 
 module Ring
 class SQA
@@ -30,7 +29,8 @@ class SQA
 
     private
 
-    def initialize
+    def initialize nodes
+      @nodes    = nodes
       @methods  = []
       @methods  << Email.new   if CFG.email.to?
       @methods  << UDP2IRC.new if CFG.irc.password?
@@ -41,8 +41,7 @@ class SQA
     def compose_message alarm_buffer
       exceeding_nodes = alarm_buffer.exceeding_nodes
       msg = {short: "#{@hostname}: raising alarm - #{exceeding_nodes.size} new nodes down"}
-      nodes_json = NodesJSON.new
-      exceeding_nodes = exceeding_nodes.map { |node| nodes_json.get node }
+      exceeding_nodes = exceeding_nodes.map { |node| @nodes.get node }
 
       nodes_list = ''
       exceeding_nodes.sort_by{ |node| node[:cc] }.each do |node|
