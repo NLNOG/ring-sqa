@@ -6,7 +6,7 @@ class SQA
 
     def address
       #CFG.ipv6? ? CFG.host.ipv6 : CFG.host.ipv4
-      nil # NAT 1:1 does not have expected address where we can bind
+      CFG:ipv6? ? '::0' : '0.0.0.0' # NAT 1:1 does not have expected address where we can bind
     end
 
     def port
