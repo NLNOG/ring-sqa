@@ -6,8 +6,8 @@ class SQA
   class Paste
     def self.add string
       Paste.new.add string
-    rescue
-      'paste failed'
+    rescue => error
+      "paste raised '#{error.class}' with message '#{error.message}'"
     end
 
     def add string, url=CFG.paste.url
