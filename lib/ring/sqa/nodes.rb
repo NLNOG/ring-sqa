@@ -62,6 +62,7 @@ class SQA
           as:   json['asn'],
           cc:   json['countrycode'],
         }
+        next if CFG.host.name == node[:name]
         nodes[ip] = node
       end
       nodes
@@ -77,10 +78,10 @@ class SQA
       address = IPAddr.new(entry.first) rescue (return true)
       if CFG.ipv6?
         return true if address.ipv4?
-        return true if address == IPAddr.new(CFG.bind.ipv6)
+        return true if address == IPAddr.new(CFG.host.ipv6)
       else
         return true if address.ipv6?
-        return true if address == IPAddr.new(CFG.bind.ipv4)
+        return true if address == IPAddr.new(CFG.host.ipv4)
       end
       false
     end

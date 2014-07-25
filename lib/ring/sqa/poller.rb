@@ -5,7 +5,8 @@ class SQA
     MAX_READ     = 500
 
     def address
-      CFG.ipv6? ? CFG.bind.ipv6 : CFG.bind.ipv4
+      #CFG.ipv6? ? CFG.host.ipv6 : CFG.host.ipv4
+      nil # NAT 1:1 does not have expected address where we can bind
     end
 
     def port

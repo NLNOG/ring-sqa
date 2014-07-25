@@ -27,8 +27,9 @@ module Ring
 
     CFG = Config.cfg
 
-    CFG.bind.ipv4 = Socket::getaddrinfo(Socket.gethostname,"echo",Socket::AF_INET)[0][3]
-    CFG.bind.ipv6 = Socket::getaddrinfo(Socket.gethostname,"echo",Socket::AF_INET6)[0][3]
+    CFG.host.name = Socket.gethostname
+    CFG.host.ipv4 = Socket::getaddrinfo(CFG.host.name,"echo",Socket::AF_INET)[0][3]
+    CFG.host.ipv6 = Socket::getaddrinfo(CFG.host.name,"echo",Socket::AF_INET6)[0][3]
 
     raise NoConfig, 'edit /etc/ring-sqa/main.conf' if Config.create
   end
