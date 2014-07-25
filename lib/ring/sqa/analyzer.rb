@@ -40,7 +40,7 @@ class SQA
     attr_reader :array
     def initialize max_size=30
       @max_size = max_size
-      init_nodes = Array.new 99, ''
+      init_nodes = Array.new @nodes.list.size * 2, ''
       @array = Array.new max_size, init_nodes
     end
     def push e
