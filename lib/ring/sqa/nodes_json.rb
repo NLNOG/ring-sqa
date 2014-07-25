@@ -5,7 +5,13 @@ class SQA
 
   class NodesJSON
     def get node
-      (@nodes[node] or {})
+      json = (@nodes[node] or {})
+      {
+        name: json['hostname'],
+        ip:   node,
+        as:   json['asn'],
+        cc:   json['countrycode'],
+      }
     rescue
       {}
     end

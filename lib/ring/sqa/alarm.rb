@@ -42,19 +42,18 @@ class SQA
     def compose_message alarm_buffer
       exceeding_nodes = alarm_buffer.exceeding_nodes
       msg = {short: "#{@hostname}: raising alarm - #{exceeding_nodes.size} new nodes down"}
-      nodes = NodesJSON.new
+      nodes_json = NodesJSON.new
+      exceeding_nodes = exceeding_nodes.map { |node| nodes_json.get node }
 
       nodes_list = ''
-      exceeding_nodes.each do |node|
-        json = nodes.get node
-        nodes_list << "- %-35s %15s  AS%-6s  %2s\n" % [json['hostname'], node, json['asn'], json['countrycode']]
+      exceeding_nodes.sort_by{ |node| node[:cc] }.each do |node|
+        nodes_list << "- %-35s %15s  AS%-6s  %2s\n" % [node[:name], node[:ip], node[:as], node[:cc]]
       end
 
       mtr_list = ''
       exceeding_nodes.sample(3).each do |node|
-       json = nodes.get node
-        mtr_list << "%-35s AS%-6s (%2s)\n" % [json['hostname'], json['asn'], json['countrycode']]
-        mtr_list << MTR.run(node)
+        mtr_list << "%-35s AS%-6s (%2s)\n" % [node[:name], node[:as], node[:cc]]
+        mtr_list << MTR.run(node[:ip])
         mtr_list << "\n"
       end
 
