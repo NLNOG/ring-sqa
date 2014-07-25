@@ -64,6 +64,8 @@ class SQA
       end
 
       msg[:long] = <<EOF
+Regarding: #{hostname}
+
 This is an automated alert from the distributed partial outage
 monitoring system "RING SQA".
 
