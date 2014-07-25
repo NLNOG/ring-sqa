@@ -30,7 +30,7 @@ class SQA
     def initialize database, nodes
       @db         = database
       @nodes      = nodes
-      @alarm      = Alarm.new @db
+      @alarm      = Alarm.new
       @buffer     = AnalyzeBuffer.new @nodes.list.size
       @db_id_seen = 0
     end

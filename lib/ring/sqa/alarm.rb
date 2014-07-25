@@ -30,8 +30,7 @@ class SQA
 
     private
 
-    def initialize database
-      @db       = database
+    def initialize
       @methods  = []
       @methods  << Email.new   if CFG.email.to?
       @methods  << UDP2IRC.new if CFG.irc.password?
