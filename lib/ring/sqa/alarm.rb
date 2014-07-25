@@ -47,13 +47,13 @@ class SQA
       nodes_list = ''
       exceeding_nodes.each do |node|
         json = nodes.get node
-        nodes_list << "- %-30s %14s  AS %5s  %2s\n" % [json['hostname'], node, json['asn'], json['countrycode']]
+        nodes_list << "- %-35s %15s  AS%-6s  %2s\n" % [json['hostname'], node, json['asn'], json['countrycode']]
       end
 
       mtr_list = ''
       exceeding_nodes.sample(3).each do |node|
-        json = nodes.get node
-        mtr_list << "%-30s AS%5s (%2s)\n" % [json['hostname'], json['asn'], json['countrycode']]
+       json = nodes.get node
+        mtr_list << "%-35s AS%-6s (%2s)\n" % [json['hostname'], json['asn'], json['countrycode']]
         mtr_list << MTR.run(node)
         mtr_list << "\n"
       end
