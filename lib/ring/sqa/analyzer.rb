@@ -41,7 +41,7 @@ class SQA
     def initialize nodes_count, max_size=30, median_of=27
       @max_size   = max_size
       @median_of  = median_of
-      nodes_count = CFF.fake? ? 0 : nodes_count
+      nodes_count = CFG.fake? ? 0 : nodes_count
       init_nodes  = Array.new nodes_count * 2, ''
       @array      = Array.new max_size, init_nodes
     end
