@@ -31,16 +31,16 @@ class SQA
       @db         = database
       @nodes      = nodes
       @alarm      = Alarm.new @db
-      @buffer     = AnalyzeBuffer.new
+      @buffer     = AnalyzeBuffer.new @nodes.list.size
       @db_id_seen = 0
     end
   end
 
   class AnalyzeBuffer
     attr_reader :array
-    def initialize max_size=30
+    def initialize nodes_count, max_size=30
       @max_size = max_size
-      init_nodes = Array.new @nodes.list.size * 2, ''
+      init_nodes = Array.new nodes_count * 2, ''
       @array = Array.new max_size, init_nodes
     end
     def push e
