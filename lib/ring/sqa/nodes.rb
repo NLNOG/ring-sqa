@@ -24,6 +24,7 @@ class SQA
     end
 
     def get_list
+      Log.info "loading #{FILE}"
       list = []
       File.read(FILE).lines.each do |line|
         entry = line.split(/\s+/)
