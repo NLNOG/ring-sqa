@@ -9,7 +9,7 @@ class SQA
     Config.default.irc.host     = '213.136.8.179'
     Config.default.irc.port     = 5502
     Config.default.irc.password = 'shough2oChoo'
-    Config.default.irc.channel  = '#ring'
+    Config.default.irc.target   = '#ring'
 
     begin
       Config.load

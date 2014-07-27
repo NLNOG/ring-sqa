@@ -14,12 +14,11 @@ class Alarm
       @subject = prefix + msg[:short]
       @body    = msg[:long]
       send_email compose_email
+    rescue => error
+      Log.error "Email raised '#{error.class}' with message '#{error.message}'"
     end
 
     private
-
-    def initialize
-    end
 
     def compose_email
       mail = []
