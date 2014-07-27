@@ -43,7 +43,7 @@ class SQA
       if CFG.ram_database?
         @db = Sequel.sqlite sequel_opts
       else
-        file = CFG.ipv6? ? 'ipv6.db' : 'ipv4.db'
+        file = '%s.db' % CFG.afi
         file = File.join CFG.directory, file
         File.unlink file rescue nil # delete old database
         @db = Sequel.sqlite file, sequel_opts

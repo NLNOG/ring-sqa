@@ -46,7 +46,7 @@ class SQA
       nodes = {}
       json = JSON.load File.read(file)
       json['results']['nodes'].each do |node|
-        addr = CFG.ipv6? ? node['ipv6'] : node['ipv4']
+        addr = node[CFG.afi]
         next unless ips.include? addr
         nodes[addr] = node
       end
@@ -70,13 +70,14 @@ class SQA
 
 
     def entry_skip? entry
+      # skip ipv4 entries if we are running in ipv6 mode, and vice versa
       return true unless entry.size > 2
       return true if entry.first.match(/^\s*#/)
       return true if CFG.hosts.ignore.any?   { |re| entry[2].match Regexp.new(re) }
       return true unless CFG.hosts.load.any? { |re| entry[2].match Regexp.new(re) }
 
       address = IPAddr.new(entry.first) rescue (return true)
-      if CFG.ipv6?
+      if CFG.afi == "ipv6"
         return true if address.ipv4?
         return true if address == IPAddr.new(CFG.host.ipv6)
       else

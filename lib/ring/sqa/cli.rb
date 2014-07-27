@@ -22,7 +22,7 @@ class SQA
     def initialize
       _args, @opts = opts_parse
       CFG.debug = @opts.debug?
-      CFG.ipv6  = @opts.ipv6?
+      CFG.afi = @opts.ipv6? ? "ipv6" : "ipv4"
       CFG.fake  = @opts.fake?
       require_relative 'log'
       Log.level = Logger::DEBUG if @opts.debug?

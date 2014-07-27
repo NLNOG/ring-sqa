@@ -4,7 +4,7 @@ class SQA
   class Alarm
     def message nodes_list, mtr_list, buffer_list
 "
-Regarding: #{Ring::SQA::CFG.host.name}
+Regarding: #{Ring::SQA::CFG.host.name} #{Ring::SQA::CFG.afi}
 
 This is an automated alert from the distributed partial outage
 monitoring system 'RING SQA'.

@@ -36,12 +36,13 @@ class SQA
       @methods  << Email.new   if CFG.email.to?
       @methods  << UDP2IRC.new if CFG.irc.password?
       @hostname = Ring::SQA::CFG.host.name
+      @afi      = Ring::SQA::CFG.afi
       @alarm    = false
     end
 
     def compose_message alarm_buffer
       exceeding_nodes = alarm_buffer.exceeding_nodes
-      msg = {short: "#{@hostname}: raising alarm - #{exceeding_nodes.size} new nodes down"}
+      msg = {short: "#{@hostname}: raising #{@afi} alarm - #{exceeding_nodes.size} new nodes down"}
       exceeding_nodes = exceeding_nodes.map { |node| @nodes.get node }
 
       nodes_list = ''

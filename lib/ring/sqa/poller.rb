@@ -5,16 +5,15 @@ class SQA
     MAX_READ     = 500
 
     def address
-      #CFG.ipv6? ? CFG.host.ipv6 : CFG.host.ipv4
-      CFG.ipv6? ? '::' : '0.0.0.0' # NAT 1:1 does not have expected address where we can bind
+      CFG.afi == "ipv6" ? '::' : '0.0.0.0' # NAT 1:1 does not have expected address where we can bind
     end
 
     def port
-      CFG.port.to_i
+      CFG.port.to_i + ( CFG.afi == 'ipv6' ? 6 : 0 )
     end
 
     def udp_socket
-      CFG.ipv6? ? UDPSocket.new(Socket::AF_INET6) : UDPSocket.new
+      CFG.afi == "ipv6" ? UDPSocket.new(Socket::AF_INET6) : UDPSocket.new
     end
   end
 
