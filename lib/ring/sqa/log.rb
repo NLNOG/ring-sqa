@@ -7,7 +7,7 @@ class SQA
   else
     begin
       require 'syslog/logger'
-      Log = Syslog::Logger.new 'ring-sqad'
+      Log = Syslog::Logger.new 'ring-sqad%i' % ( CFG.afi == "ipv6" ? 6 : 4 )
     rescue LoadError
       require 'logger'
       Log = Logger.new STDERR
