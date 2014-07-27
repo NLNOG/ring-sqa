@@ -2,17 +2,17 @@
   Discovers NLNOG Ring nodes by monitoring /etc/hosts with inotify. UDP pings
   each node periodically recording latency as microseconds in SQL database
 
-  Currently 4 threads
+  Currently 5 threads
 
   1. main thread, launches everything and finally gives control to Analyze class
-  2. querier thread, sends queries and waits for responses, populates database
-  3. responder thread, waits for queries and echoes them back
-  4. inotify monitor thread
+  2. sender thread, sends queries and populates DB with new negative response row
+  3. receiver thread, receives replies and updates DB with positive response
+  4. responder thread, receives queries and sends replies
+  5. inotify monitor thread
 
 ## Use
-  ring-sqad --help
-  ring-sqad --daemonize
+  - ring-sqad --help
+  - ring-sqad --daemonize
 
 ## Todo
-  1. Querier loop should sleep dynamically between nodes to spread CPU/network demand
-  2. Analyzer class should actually do something (use average of numbers before median as norm, if last Y measurements are Z times above norm (or more than X standard deviations?) raise alarm?
+  - Get rid of Sequel+SQLite share Hash or Array instead?
