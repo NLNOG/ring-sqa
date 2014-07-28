@@ -65,7 +65,7 @@ class SQA
         time -= 1
       end
 
-      msg[:long] = message nodes_list, mtr_list, buffer_list
+      msg[:long] = message nodes_list, mtr_list, buffer_list, exceeding_nodes.size
       msg
     end
 

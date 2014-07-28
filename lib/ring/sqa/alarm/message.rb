@@ -2,7 +2,7 @@ module Ring
 class SQA
 
   class Alarm
-    def message nodes_list, mtr_list, buffer_list
+    def message nodes_list, mtr_list, buffer_list, amount
 "
 Regarding: #{Ring::SQA::CFG.host.name} #{Ring::SQA::CFG.afi}
 
@@ -14,7 +14,7 @@ as indicating that there is a high probability your NLNOG RING node
 cannot reach the entire internet. Possible causes could be an outage
 in your upstream's or peer's network.
 
-The following #{nodes_list.size} nodes previously were reachable, but became unreachable
+The following #{amount} nodes previously were reachable, but became unreachable
 over the course of the last 3 minutes:
 
 #{nodes_list}
