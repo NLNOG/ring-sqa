@@ -45,9 +45,10 @@ class SQA
       msg = {short: "#{@hostname}: raising #{@afi} alarm - #{exceeding_nodes.size} new nodes down"}
       exceeding_nodes = exceeding_nodes.map { |node| @nodes.get node }
 
+      addr_len = @afi == 'ipv6' ? 40 : 15
       nodes_list = ''
       exceeding_nodes.sort_by{ |node| node[:cc] }.each do |node|
-        nodes_list << "- %-35s %15s  AS%-6s  %2s\n" % [node[:name], node[:ip], node[:as], node[:cc]]
+        nodes_list << "- %-35s %#{addr_len}s  AS%-6s  %2s\n" % [node[:name], node[:ip], node[:as], node[:cc]]
       end
 
       mtr_list = ''

@@ -56,6 +56,7 @@ class SQA
     def json_to_nodes_hash from_json
       nodes= {}
       from_json.each do |ip, json|
+        ip = IPAddr.new(ip).to_s
         node = {
           name: json['hostname'],
           ip:   ip,
