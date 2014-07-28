@@ -21,7 +21,7 @@ class SQA
     def clear
       if @alarm == true
         @alarm = false
-        msg = { short: "#{@hostname}: clearing alarm" }
+        msg = { short: "#{@hostname}: clearing #{@afi} alarm" }
         msg[:long] = msg[:short]
         Log.info msg[:short]
         @methods.each { |alarm_method| alarm_method.send msg }
