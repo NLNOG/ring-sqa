@@ -39,7 +39,7 @@ class SQA
       nodes_hash list
     rescue => error
       Log.warn "#{error.class} raised with message '#{error.message}' while generating nodes list"
-      @all
+      (@all or {})
     end
 
     def nodes_hash ips, file=CFG.nodes_json
