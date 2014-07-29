@@ -46,6 +46,7 @@ class SQA
       nodes = {}
       json = JSON.load File.read(file)
       json['results']['nodes'].each do |node|
+        next if node['service']['sqa'] == false rescue nil
         addr = node[CFG.afi]
         next unless ips.include? addr
         nodes[addr] = node
