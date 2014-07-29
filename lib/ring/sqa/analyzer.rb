@@ -38,7 +38,7 @@ class SQA
 
   class AnalyzeBuffer
     attr_reader :array
-    def initialize nodes_count, max_size=30, median_of=27
+    def initialize nodes_count, max_size=CFG.analyzer.size, median_of=CFG.analyzer.median_of
       @max_size   = max_size
       @median_of  = median_of
       nodes_count = CFG.fake? ? 0 : nodes_count

@@ -28,7 +28,7 @@ An alarm is raised under the following conditions: every 30 seconds
 your node pings all other nodes. The amount of nodes that cannot be
 reached is stored in a circular buffer, with each element representing
 a minute of measurements. In the event that the last three minutes are
-#{Ring::SQA::CFG.analyzer.tolerance} above the median of the previous 27 measurement slots, a partial
+#{Ring::SQA::CFG.analyzer.tolerance} above the median of the previous #{Ring::SQA::CFG.analyzer_median_of} measurement slots, a partial
 outage is assumed. The ring buffer's output is as following:
 
 #{buffer_list}
