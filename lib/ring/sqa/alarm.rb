@@ -15,7 +15,7 @@ class SQA
         @alarm = true
         msg = compose_message alarm_buffer
         Log.info msg[:short]
-        @methods.each { |alarm_method| alarm_send alarm_method, msg, alarm_buffer }
+        @methods.each { |alarm_method| alarm_send alarm_method, 'raise', msg, alarm_buffer }
       end
     end
 
@@ -25,7 +25,7 @@ class SQA
         msg = { short: "#{@hostname}: clearing #{@afi} alarm" }
         msg[:long] = msg[:short]
         Log.info msg[:short]
-        @methods.each { |alarm_method| alarm_send alarm_method, msg, nil }
+        @methods.each { |alarm_method| alarm_send alarm_method, 'clear', msg, nil }
       end
     end
 
@@ -72,9 +72,10 @@ class SQA
       msg
     end
 
-    def alarm_send alarm_method, msg, alarm_buffer=nil
+    def alarm_send alarm_method, status, msg, alarm_buffer=nil
       alarm_method.send(short:        msg[:short],
                         long:         msg[:long],
+                        status:       status,
                         alarm_buffer: alarm_buffer,
                         nodes:        @nodes)
     end

@@ -8,7 +8,8 @@ class Alarm
         :alarm_buffer => opts[:alarm_buffer].exceeding_nodes,
         :nodes        => opts[:nodes].all,
         :short        => opts[:short],
-        :long         => opts[:loing],
+        :long         => opts[:long],
+        :status       => opts[:status],
       })
       exec stdout, CFG.exec.command, CFG.exec.arguments?
     rescue => error
