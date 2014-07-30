@@ -73,10 +73,10 @@ class SQA
     end
 
     def alarm_send alarm_method, msg, alarm_buffer=nil
-      alarm_method.send short:        msg[:short],
+      alarm_method.send(short:        msg[:short],
                         long:         msg[:long],
                         alarm_buffer: alarm_buffer,
-                        nodes:        @nodes,
+                        nodes:        @nodes)
     end
 
   end

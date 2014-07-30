@@ -5,7 +5,7 @@ class Alarm
   class UDP2IRC
     def send opts
       short, long = opts[:short], opts[:long]
-      irc CFG.irc
+      irc = CFG.irc
       url = Paste.add long
       if irc.class == Array
         irc.each do |target|

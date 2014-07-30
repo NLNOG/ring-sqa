@@ -4,20 +4,21 @@ class Alarm
 
   class Exec
     def send opts
-      stdout = JSON.pretty_generate [
-        opts[:alarm_buffer].exceeding_nodes,
-        opts[:nodes],
-        opts[:short],
-        opts[:long],
-      ]
-      exec stdout, CFG.exec.command, CFG.exec.arguments?.split(' ')
+      stdout = JSON.pretty_generate( {
+        :alarm_buffer => opts[:alarm_buffer].exceeding_nodes,
+        :nodes        => opts[:nodes].all,
+        :short        => opts[:short],
+        :long         => opts[:loing],
+      })
+      exec stdout, CFG.exec.command, CFG.exec.arguments?
     rescue => error
       Log.error "Exec raised '#{error.class}' with message '#{error.message}'"
     end
 
     private
 
-    def exec write, cmd, *args
+    def exec write, cmd, args
+      args = args.compact
       Popen3.popen3(cmd, *args) do |stdin, stdout, stderr, wait_thr|
         stdin.write write
         stdin.close
