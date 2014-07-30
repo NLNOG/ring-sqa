@@ -1,5 +1,6 @@
 require_relative 'alarm/email'
 require_relative 'alarm/udp2irc'
+require_relative 'alarm/exec'
 require_relative 'alarm/cfg'
 require_relative 'alarm/message'
 require_relative 'mtr'
@@ -14,7 +15,7 @@ class SQA
         @alarm = true
         msg = compose_message alarm_buffer
         Log.info msg[:short]
-        @methods.each { |alarm_method| alarm_method.send msg }
+        @methods.each { |alarm_method| alarm_send alarm_method, msg, alarm_buffer }
       end
     end
 
@@ -24,7 +25,7 @@ class SQA
         msg = { short: "#{@hostname}: clearing #{@afi} alarm" }
         msg[:long] = msg[:short]
         Log.info msg[:short]
-        @methods.each { |alarm_method| alarm_method.send msg }
+        @methods.each { |alarm_method| alarm_send alarm_method, msg, nil }
       end
     end
 
@@ -35,6 +36,7 @@ class SQA
       @methods  = []
       @methods  << Email.new   if CFG.email.to?
       @methods  << UDP2IRC.new if CFG.irc.password?
+      @methods  << Exec.new    if CFG.exec.command?
       @hostname = Ring::SQA::CFG.host.name
       @afi      = Ring::SQA::CFG.afi
       @alarm    = false
@@ -68,6 +70,13 @@ class SQA
 
       msg[:long] = message nodes_list, mtr_list, buffer_list, exceeding_nodes.size
       msg
+    end
+
+    def alarm_send alarm_method, msg, alarm_buffer=nil
+      alarm_method.send short:        msg[:short],
+                        long:         msg[:long],
+                        alarm_buffer: alarm_buffer,
+                        nodes:        @nodes,
     end
 
   end

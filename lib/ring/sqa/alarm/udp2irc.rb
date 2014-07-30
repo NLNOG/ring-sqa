@@ -3,14 +3,16 @@ class SQA
 class Alarm
 
   class UDP2IRC
-    def send message, irc=CFG.irc
-      url = Paste.add message[:long]
+    def send opts
+      short, long = opts[:short], opts[:long]
+      irc CFG.irc
+      url = Paste.add long
       if irc.class == Array
         irc.each do |target|
-          udp2irc target['password'], target['target'], message, url, target['host'], target['port']
+          udp2irc target['password'], target['target'], short, url, target['host'], target['port']
         end
       else
-        udp2irc irc.password, irc.target, message, url, irc.host, irc.port
+        udp2irc irc.password, irc.target, short, url, irc.host, irc.port
       end
     rescue => error
       Log.error "UDP2IRC raised '#{error.class}' with message '#{error.message}'"

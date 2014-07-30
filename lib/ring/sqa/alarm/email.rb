@@ -7,12 +7,13 @@ class Alarm
   class Email
     SERVER = 'localhost'
 
-    def send msg
+    def send opts
+      short, long = opts[:short], opts[:long]
       @from    = CFG.email.from
       @to      = [CFG.email.to].flatten
       prefix   = CFG.email.prefix? ? CFG.email.prefix : ''
-      @subject = prefix + msg[:short]
-      @body    = msg[:long]
+      @subject = prefix + short
+      @body    = long
       send_email compose_email
     rescue => error
       Log.error "Email raised '#{error.class}' with message '#{error.message}'"
