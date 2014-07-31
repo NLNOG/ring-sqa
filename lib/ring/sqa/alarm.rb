@@ -77,7 +77,8 @@ class SQA
                         long:         msg[:long],
                         status:       status,
                         alarm_buffer: alarm_buffer,
-                        nodes:        @nodes)
+                        nodes:        @nodes,
+                        afi:         @afi)
     end
 
   end

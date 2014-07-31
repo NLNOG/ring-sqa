@@ -10,6 +10,7 @@ class Alarm
         :short        => opts[:short],
         :long         => opts[:long],
         :status       => opts[:status],
+        :afi          => opts[:afi],
       })
       exec stdout, CFG.exec.command, CFG.exec.arguments?
     rescue => error
