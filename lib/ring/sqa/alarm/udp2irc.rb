@@ -23,7 +23,7 @@ class Alarm
     def udp2irc password, target, message, url, host, port
       msg = [password, target, message, url].join ' '
       msg += "\0" while msg.size % 16 > 0
-      UDPSocket.new send msg, 0, host, port
+      UDPSocket.new.send msg, 0, host, port
     end
   end
 

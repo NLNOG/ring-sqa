@@ -35,7 +35,7 @@ class SQA
       @nodes    = nodes
       @methods  = []
       @methods  << Email.new   if CFG.email.to?
-      @methods  << UDP2IRC.new if CFG.irc.password?
+      @methods  << UDP2IRC.new if Array === CFG.irc or CFG.irc.password?
       @methods  << Exec.new    if CFG.exec.command?
       @hostname = Ring::SQA::CFG.host.name
       @afi      = Ring::SQA::CFG.afi

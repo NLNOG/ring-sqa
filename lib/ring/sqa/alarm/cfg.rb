@@ -11,7 +11,7 @@ class SQA
     Config.default.irc.password   = 'shough2oChoo'
     Config.default.irc.target     = '#ring'
     Config.default.exec.command   = false
-    Config.default.exec.arguments = '-p99 --but ba1'
+    Config.default.exec.arguments = false
 
     begin
       Config.load

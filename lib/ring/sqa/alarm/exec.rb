@@ -19,8 +19,9 @@ class Alarm
     private
 
     def exec write, cmd, args
-      args = args.compact
-      Popen3.popen3(cmd, *args) do |stdin, stdout, stderr, wait_thr|
+      args = '' unless args
+      args = args.split ' '
+      Open3.popen3(cmd, *args) do |stdin, stdout, stderr, wait_thr|
         stdin.write write
         stdin.close
         wait_thr.join
