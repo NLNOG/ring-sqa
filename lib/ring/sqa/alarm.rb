@@ -19,13 +19,13 @@ class SQA
       end
     end
 
-    def clear
+    def clear alarm_buffer
       if @alarm == true
         @alarm = false
         msg = { short: "#{@hostname}: clearing #{@afi} alarm" }
         msg[:long] = msg[:short]
         Log.info msg[:short]
-        @methods.each { |alarm_method| alarm_send alarm_method, 'clear', msg, nil }
+        @methods.each { |alarm_method| alarm_send alarm_method, 'clear', msg, alarm_buffer }
       end
     end
 
@@ -72,7 +72,7 @@ class SQA
       msg
     end
 
-    def alarm_send alarm_method, status, msg, alarm_buffer=nil
+    def alarm_send alarm_method, status, msg, alarm_buffer
       alarm_method.send(short:        msg[:short],
                         long:         msg[:long],
                         status:       status,

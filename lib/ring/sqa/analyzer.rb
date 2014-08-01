@@ -15,7 +15,7 @@ class SQA
         sleep INFLIGHT_WAIT
         records = records.all
         @buffer.push records.map { |record| record.peer }
-        @buffer.exceed_median? ? @alarm.set(@buffer) : @alarm.clear
+        @buffer.exceed_median? ? @alarm.set(@buffer) : @alarm.clear(@buffer)
         delay = INTERVAL-(Time.now-start)
         if delay > 0
           sleep delay
