@@ -14,7 +14,9 @@ class SQA
           sleep INTER_NODE_GAP
         end
         duration = Time.now-loop_start
-        if duration < INTERVAL
+        if duration < 0
+          Log.warn "Send loop duration was negative - ntp sync?"
+        elsif duration < INTERVAL
           sleep INTERVAL-duration
         else
           Log.warn "Send loop took longer than #{INTERVAL}s"
