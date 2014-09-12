@@ -17,6 +17,11 @@ class SQA
         @buffer.push records.map { |record| record.peer }
         @buffer.exceed_median? ? @alarm.set(@buffer) : @alarm.clear(@buffer)
         delay = INTERVAL-(Time.now-start)
+        # in case delay happens to be too big
+        if delay > INTERVAL
+          delay = INTERVAL
+          Log.warn "delay became larger than #{INTERVAL}, capping it. (did ntp just sync?)"
+        end
         if delay > 0
           sleep delay
         else
