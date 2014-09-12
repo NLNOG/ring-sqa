@@ -21,6 +21,8 @@ module Ring
     def initialize
       require_relative 'log'
       @database  = Database.new
+      # make sure Ping is created
+      raise "Table 'pings' does not exist" unless Ring::SQA::Database::Ping.table_exists?
       @nodes     = Nodes.new
       run
     end
