@@ -4,7 +4,7 @@ class SQA
   class Alarm
     Config = Asetus.new name: 'sqa', load: false, usrdir: Directory, cfgfile: 'alarm.conf'
     Config.default.email.to       = false
-    Config.default.email.from     = 'foo@example.com'
+    Config.default.email.from     = "ring-sqa@" + CFG.host.name
     Config.default.email.prefix   = false
     Config.default.irc.host       = '213.136.8.179'
     Config.default.irc.port       = 5502
