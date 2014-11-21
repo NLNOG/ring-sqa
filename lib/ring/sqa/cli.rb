@@ -12,7 +12,7 @@ class SQA
       puts "Running as pid: #{pid}"
       Process.daemon if @opts.daemonize?
       SQA.new
-    rescue => error
+    rescue Exception => error
       crash error
       raise
     end
