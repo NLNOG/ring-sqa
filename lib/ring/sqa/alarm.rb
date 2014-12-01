@@ -25,7 +25,7 @@ class SQA
         msg = { short: "#{@hostname}: clearing #{@afi} alarm" }
         msg[:long] = msg[:short]
         Log.info msg[:short]
-        @methods.each { |alarm_method| alarm_send alarm_method, 'clear', msg, alarm_buffer }
+        @methods.each { |alarm_method| alarm_send alarm_method, 'clear', msg, alarm_buffer } if CFG.recovery.notify?
       end
     end
 
@@ -78,7 +78,7 @@ class SQA
                         status:       status,
                         alarm_buffer: alarm_buffer,
                         nodes:        @nodes,
-                        afi:         @afi)
+                        afi:          @afi)
     end
 
   end
