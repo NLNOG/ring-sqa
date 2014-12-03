@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name              = 'ring-sqa'
-  s.version           = '0.1.6'
+  s.version           = '0.1.7'
   s.licenses          = %w( Apache-2.0 )
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti', 'Job Snijders' ]
   s.email             = %w( saku@ytti.fi )
-  s.homepage          = 'http://github.com/ytti/ring-sqa'
+  s.homepage          = 'http://github.com/nlnog/ring-sqa'
   s.summary           = 'NLNOG Ring SQA'
   s.description       = 'gets list of nodes and pings from each to each storing results'
   s.rubyforge_project = s.name
