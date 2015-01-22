@@ -44,7 +44,11 @@ class SQA
 
     def compose_message alarm_buffer
       exceeding_nodes = alarm_buffer.exceeding_nodes
-      msg = {short: "#{@hostname}: raising #{@afi} alarm - #{exceeding_nodes.size} new nodes down"}
+      if exceeding_nodes.size > 0
+          msg = {short: "#{@hostname}: raising #{@afi} alarm - #{exceeding_nodes.size} new nodes down"}
+      else
+          msg = {short: "#{@hostname}: raising #{@afi} alarm - no new nodes are down, but network instability still detected"}
+      end
       exceeding_nodes = exceeding_nodes.map { |node| @nodes.get node }
 
       addr_len = @afi == 'ipv6' ? 40 : 15
