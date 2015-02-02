@@ -44,7 +44,11 @@ class SQA
 
     def compose_message alarm_buffer
       exceeding_nodes = alarm_buffer.exceeding_nodes
-      msg = {short: "#{@hostname}: raising #{@afi} alarm - #{exceeding_nodes.size} new nodes down"}
+      if exceeding_nodes.size > 0
+          msg = {short: "#{@hostname}: raising #{@afi} alarm - #{exceeding_nodes.size} new nodes down"}
+      else
+          msg = {short: "#{@hostname}: raising #{@afi} alarm - many nodes were unreachable in the last monitoring period, there is likely network instability. This could be down to your ring node, its local network, or disruption of peering and/or upstream networks (for example instability at an IXP)."}
+      end
       exceeding_nodes = exceeding_nodes.map { |node| @nodes.get node }
 
       addr_len = @afi == 'ipv6' ? 40 : 15
