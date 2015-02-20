@@ -47,7 +47,7 @@ class SQA
       if exceeding_nodes.size > 0
           msg = {short: "#{@hostname}: raising #{@afi} alarm - #{exceeding_nodes.size} new nodes down"}
       else
-          msg = {short: "#{@hostname}: raising #{@afi} alarm - many nodes were unreachable in the last monitoring period, there is likely network instability. This could be down to your ring node, its local network, or disruption of peering and/or upstream networks (for example instability at an IXP)."}
+          msg = {short: "#{@hostname}: raising #{@afi} alarm - many nodes were unreachable, general instabiliy"}
       end
       exceeding_nodes = exceeding_nodes.map { |node| @nodes.get node }
 
