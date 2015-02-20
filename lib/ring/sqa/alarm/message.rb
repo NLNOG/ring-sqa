@@ -9,9 +9,10 @@ This is an automated alert from the distributed partial outage
 monitoring system 'RING SQA'.
 
 At #{Time.now.utc} the following measurements were analysed
-as indicating that there is a high probability your NLNOG RING node
-cannot reach the entire internet. Possible causes could be an outage
-in your upstream's or peer's network.
+as indicating that there is a high probability your NLNOG RING node cannot
+reach the entire internet. This could be down to your RING node, its local
+network, or disruption of peering and/or upstream networks (for example
+instability at an IXP or one of your transit providers).
 
 The following #{amount} nodes previously were reachable, but became unreachable
 over the course of the last 3 minutes:
