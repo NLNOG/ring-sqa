@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 begin
-  require 'ring/sqa/cli'
+  require_relative '../lib/ring/sqa/cli'
   Ring::SQA::CLI.new
 rescue => error
   warn error.to_s

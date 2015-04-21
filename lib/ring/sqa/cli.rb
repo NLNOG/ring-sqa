@@ -41,7 +41,7 @@ class SQA
     end
 
     def crash error
-      file = File.join '/tmp', "crash.txt.#{$$}"
+      file = File.join '/tmp', "ring-sqa-crash.txt.#{$$}"
       open file, 'w' do |file|
         file.puts error.class.to_s + ' => ' + error.message
         file.puts '-' * 70

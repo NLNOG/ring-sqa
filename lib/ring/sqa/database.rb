@@ -39,7 +39,7 @@ class SQA
 
     def initialize
       Sequel::Model.plugin :schema
-      sequel_opts = { max_connections: 3, pool_timout: 60 }
+      sequel_opts = { max_connections: 1, pool_timout: 60 }
       if CFG.ram_database?
         @db = Sequel.sqlite sequel_opts
       else
