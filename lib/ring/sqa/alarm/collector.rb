@@ -6,7 +6,7 @@ class SQA
 class Alarm
 
   class Collector
-    URL     = 'http://sqa-collector.infra.ring.nlnog.net'
+    URL     = 'http://sqa-collector.infra.ring.nlnog.net/'
     TIMEOUT = 10
     def send opts
       json = JSON.pretty_generate( {
