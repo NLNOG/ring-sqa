@@ -9,11 +9,12 @@ class Alarm
 
     def send opts
       short, long = opts[:short], opts[:long]
-      @from    = CFG.email.from
-      @to      = [CFG.email.to].flatten
-      prefix   = CFG.email.prefix? ? CFG.email.prefix : ''
-      @subject = prefix + short
-      @body    = long
+      @from     = CFG.email.from
+      @to       = [CFG.email.to].flatten
+      prefix    = CFG.email.prefix? ? CFG.email.prefix : ''
+      @subject  = prefix + short
+      @reply_to = CFG.email.reply_to? ? CFG.email.reply_to : @from
+      @body     = long
       send_email compose_email
     rescue => error
       Log.error "Email raised '#{error.class}' with message '#{error.message}'"
@@ -25,6 +26,7 @@ class Alarm
       mail = []
       mail << 'From: '     + @from
       mail << 'To: '       + @to.join(', ')
+      mail << 'Reply-To: ' + @reply_to
       mail << 'Subject: '  + @subject
       mail << 'List-Id: '  + 'ring-sqa <sqa.ring.nlnog.net>'
       mail << 'X-Mailer: ' + 'ring-sqa'
