@@ -30,7 +30,7 @@ class Alarm
           Timeout::timeout(TIMEOUT) do
             uri = URI.parse URL
             http = Net::HTTP.new uri.host, uri.port
-            http.use_ssl = true if uri.scheme = 'https'
+            http.use_ssl = true if uri.scheme == 'https'
             http.post uri.path, json
           end
         rescue Timeout::Error
