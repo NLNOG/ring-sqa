@@ -31,7 +31,7 @@ class Alarm
             uri = URI.parse URL
             http = Net::HTTP.new uri.host, uri.port
             http.use_ssl = true if uri.scheme = 'https'
-            http.post uri.path, JSON.dump(json)
+            http.post uri.path, json
           end
         rescue Timeout::Error
           Log.error "Post timed out"
