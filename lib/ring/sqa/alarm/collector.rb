@@ -19,7 +19,7 @@ class Alarm
       })
       post json
     rescue => error
-      Log.error "Post raised '#{error.class}' with message '#{error.message}'"
+      Log.error "Collector send raised '#{error.class}' with message '#{error.message}'"
     end
 
     private
@@ -34,7 +34,9 @@ class Alarm
             http.post uri.path, json
           end
         rescue Timeout::Error
-          Log.error "Post timed out"
+          Log.error "Collector post timed out"
+        rescue => error
+          Log.error "Collector post raised '#{error.class}' with message '#{error.message}'"
         end
       end
     end
