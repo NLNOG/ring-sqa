@@ -4,13 +4,15 @@ module Ring
 class SQA
 
   class Graphite
+    ROOT = "nlnog.ring_sqa.#{CFG.afi}"
+
     def add records
       records.each do |record|
         hash = {
-         "#{record.peer}.state" => record.result
+         "#{ROOT}.#{record.peer}.state" => record.result
         }
         if record.result == 'success'
-          hash["#{record.peer}.latency"] = record.latency
+          hash["#{ROOT}.#{record.peer}.latency"] = record.latency
         end
         client.metrics hash, record.time
       end
