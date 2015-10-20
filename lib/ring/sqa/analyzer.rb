@@ -11,10 +11,11 @@ class SQA
       loop do
         start = Time.now
         @db.purge
-        @db_id_seen, records = @db.nodes_down(@db_id_seen+1)
+        first_id = @db_id_seen+1
+        @db_id_seen, records = @db.nodes_down(first_id)
         sleep INFLIGHT_WAIT
         records = records.all
-        @graphite.add records if @graphite
+        @graphite.add @db.id_range(first_id, @db_id_seen).all if @graphite
         @buffer.push records.map { |record| record.peer }
         @buffer.exceed_median? ? @alarm.set(@buffer) : @alarm.clear(@buffer)
         delay = INTERVAL-(Time.now-start)

@@ -24,7 +24,7 @@ class SQA
 
     def nodes_down first_id
       max_id = (Ping.max(:id) or first_id)
-      [max_id, Ping.distinct.where(:id=>first_id..max_id).exclude(:result => 'ok')]
+      [max_id, id_range(first_id, max_id).exclude(:result => 'ok')]
     end
 
     def up_since? id, peer
@@ -33,6 +33,10 @@ class SQA
 
     def purge older_than=3600
       Ping.where{time < (Time.now.utc-older_than).to_i}.delete
+    end
+
+    def id_range first, last
+      Ping.distinct.where(:id=>first..last)
     end
 
     private
