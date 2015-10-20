@@ -14,7 +14,7 @@ class SQA
         if record.result == 'success'
           hash["#{ROOT}.#{record.peer}.latency"] = record.latency
         end
-        client.metrics hash, record.time
+        @client.metrics hash, record.time
       end
     end
 
