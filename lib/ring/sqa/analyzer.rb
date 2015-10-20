@@ -14,6 +14,7 @@ class SQA
         @db_id_seen, records = @db.nodes_down(@db_id_seen+1)
         sleep INFLIGHT_WAIT
         records = records.all
+        @graphite.add records if @graphite
         @buffer.push records.map { |record| record.peer }
         @buffer.exceed_median? ? @alarm.set(@buffer) : @alarm.clear(@buffer)
         delay = INTERVAL-(Time.now-start)
@@ -38,7 +39,14 @@ class SQA
       @alarm      = Alarm.new @nodes
       @buffer     = AnalyzeBuffer.new @nodes.all.size
       @db_id_seen = 0
+      @graphite   = graphite if CFG.graphite?
     end
+
+    def graphite
+      require_relative 'graphite'
+      Graphite.new
+    end
+
   end
 
   class AnalyzeBuffer
