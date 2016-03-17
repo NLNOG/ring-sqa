@@ -16,7 +16,7 @@ module Ring
     Config.default.analyzer.size      = 30
     Config.default.analyzer.median_of = 27
     Config.default.nodes_json         = '/etc/ring/nodes.json'
-    Config.default.mtr.args           = '-i0.5 -c5 -r -w -n'
+    Config.default.mtr.args           = '-i0.5 -c5 -r -w -n --aslookup'
     Config.default.mtr.timeout        = 15
     Config.default.ram_database       = false
     Config.default.paste.url          = 'https://ring.nlnog.net/paste/'
