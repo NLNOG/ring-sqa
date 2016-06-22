@@ -6,6 +6,7 @@ class SQA
 class Alarm
 
   class Slack
+    TIMEOUT = 10
     def send opts
       short, long = opts[:short], opts[:long]
       cfg  = CFG.slack
