@@ -7,15 +7,16 @@ class Alarm
 
   class Slack
     def send opts
+      short, long = opts[:short], opts[:long]
       cfg  = CFG.slack
       json = JSON.pretty_generate(
         {
           "attachments" => [
             {
               "fallback"    => short,
-              "pretext"     =>  short,
+              "pretext"     => short,
               "author_name" => "NLNog Ring SQA",
-              "author_link" =>  "https://ring.nlnog.net/news/2014/07/new-monitoring-tool-ring-sqa/",
+              "author_link" => "https://ring.nlnog.net/news/2014/07/new-monitoring-tool-ring-sqa/",
               "text"        => long,
             },
           ],
