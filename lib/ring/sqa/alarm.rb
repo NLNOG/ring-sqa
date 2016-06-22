@@ -1,6 +1,7 @@
 require_relative 'alarm/email'
 require_relative 'alarm/udp2irc'
 require_relative 'alarm/exec'
+require_relative 'alarm/slack'
 require_relative 'alarm/cfg'
 require_relative 'alarm/message'
 require_relative 'alarm/collector'
@@ -38,6 +39,7 @@ class SQA
       @methods  << Email.new   if CFG.email.to?
       @methods  << UDP2IRC.new if Array === CFG.irc or CFG.irc.password?
       @methods  << Exec.new    if CFG.exec.command?
+      @methods  << Slack.new   if CFG.slack.url?
       @methods  << Collector.new
       @hostname = Ring::SQA::CFG.host.name
       @afi      = Ring::SQA::CFG.afi
