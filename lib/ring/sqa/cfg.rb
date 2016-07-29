@@ -12,7 +12,8 @@ module Ring
     Config.default.directory          = Directory
     Config.default.debug              = false
     Config.default.port               = 'ring'.to_i(36)/100
-    Config.default.analyzer.tolerance = 1.2
+    Config.default.analyzer.tolerance.relative = 1.2
+    Config.default.analyzer.tolerance.absolute = 10
     Config.default.analyzer.size      = 30
     Config.default.analyzer.median_of = 27
     Config.default.nodes_json         = '/etc/ring/nodes.json'

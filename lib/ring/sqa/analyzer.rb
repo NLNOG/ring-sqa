@@ -68,8 +68,9 @@ class SQA
       node_count[0..last].sort[last/2]
     end
     def exceed_median? tolerance=CFG.analyzer.tolerance
-      violate = (median+1)*tolerance
-      node_count[@median_of..-1].all? { |e| e > violate }
+      violate_relative = (median+1)*tolerance.relative
+      violate_absolute = (median+1)+tolerance.absolute
+      node_count[@median_of..-1].all? { |e| e > violate_relative && e > violeate_absolute }
     end
     def node_count
       @array.map { |nodes| nodes.size }
