@@ -9,8 +9,9 @@ class SQA
       record[:time]    = Time.now.utc.to_i
       record[:latency] = nil
       record[:result]  = 'no response'
-      Log.debug "adding '#{record}' to database" if CFG.debug?
-      Ping.new(record).save
+      ping = Ping.new(record).save
+      Log.debug "added '#{record}' to database with id #{ping.id}" if CFG.debug?
+      return ping
     end
 
     def update record_id, result, latency=nil
