@@ -9,6 +9,7 @@ class Alarm
     URL     = 'http://sqa-collector.infra.ring.nlnog.net/'
     TIMEOUT = 10
     def send opts
+      @url = CFG.collector.url? ? CFG.collector.url : URL
       json = JSON.pretty_generate( {
         :alarm_buffer => opts[:alarm_buffer].exceeding_nodes,
         :nodes        => opts[:nodes].all,
@@ -28,7 +29,7 @@ class Alarm
       Thread.new do
         begin
           Timeout::timeout(TIMEOUT) do
-            uri = URI.parse URL
+            uri = URI.parse @url
             http = Net::HTTP.new uri.host, uri.port
             http.use_ssl = true if uri.scheme == 'https'
             http.post uri.path, json
