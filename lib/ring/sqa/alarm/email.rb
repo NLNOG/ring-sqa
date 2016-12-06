@@ -6,7 +6,7 @@ class Alarm
 
   class Email
     SERVER  = 'localhost'
-    LIST_ID = 'ring-sqa <sqa.ring.nlnog.net'
+    LIST_ID = 'ring-sqa <sqa.ring.nlnog.net>'
 
     def send opts
       short, long = opts[:short], opts[:long]
