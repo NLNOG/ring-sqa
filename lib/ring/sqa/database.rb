@@ -51,9 +51,9 @@ class SQA
         file = File.join CFG.directory, file
         File.unlink file rescue nil # delete old database
         @db = Sequel.sqlite file, sequel_opts
-        create_db
-        require_relative 'database/model.rb'
       end
+      create_db
+      require_relative 'database/model.rb'
     end
 
     def create_db
