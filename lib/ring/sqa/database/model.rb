@@ -1,18 +1,7 @@
 module Ring
 class SQA
 class Database
-
-  class Ping < Sequel::Model
-    set_schema do
-      primary_key :id
-      Fixnum      :time
-      String      :peer
-      Fixnum      :latency
-      String      :result
-    end
-    create_table unless table_exists?
-  end
-
+  class Ping < Sequel::Model; end
 end
 end
 end

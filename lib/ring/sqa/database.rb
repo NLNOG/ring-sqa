@@ -43,7 +43,6 @@ class SQA
     private
 
     def initialize
-      Sequel::Model.plugin :schema
       sequel_opts = { max_connections: 1, pool_timout: 60 }
       if CFG.ram_database?
         @db = Sequel.sqlite sequel_opts
@@ -52,8 +51,19 @@ class SQA
         file = File.join CFG.directory, file
         File.unlink file rescue nil # delete old database
         @db = Sequel.sqlite file, sequel_opts
+        create_db
+        require_relative 'database/model.rb'
       end
-      require_relative 'database/model.rb'
+    end
+
+    def create_db
+      @db.create_table?(:pings) do
+        primary_key :id
+        Fixnum      :time
+        String      :peer
+        Fixnum      :latency
+        String      :result
+      end
     end
   end
 
