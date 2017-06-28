@@ -45,7 +45,7 @@ class SQA
 
     def graphite
       require_relative 'graphite'
-      Graphite.new
+      Graphite.new @nodes
     end
 
   end
