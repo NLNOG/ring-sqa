@@ -4,3 +4,6 @@
 
 # 0.1.0
   - wooo
+
+# 0.4.0
+  - Graphite support added with country code (rinsekloek)
