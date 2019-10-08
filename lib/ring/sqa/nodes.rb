@@ -73,10 +73,8 @@ class SQA
 
     def entry_skip? entry
       # skip ipv4 entries if we are running in ipv6 mode, and vice versa
-      return true unless entry.size > 2
+      return true unless entry.size > 1
       return true if entry.first.match(/^\s*#/)
-      return true if CFG.hosts.ignore.any?   { |re| entry[2].match Regexp.new(re) }
-      return true unless CFG.hosts.load.any? { |re| entry[2].match Regexp.new(re) }
 
       address = IPAddr.new(entry.first) rescue (return true)
       if CFG.afi == "ipv6"
@@ -86,7 +84,13 @@ class SQA
         return true if address.ipv6?
         return true if address == IPAddr.new(CFG.host.ipv4)
       end
-      false
+
+      entry.slice(1..-1).each do |element|
+          next if CFG.hosts.ignore.any?   { |re| element.match Regexp.new(re) }
+          next unless CFG.hosts.load.any? { |re| element.match Regexp.new(re) }
+          return false
+      end
+      true
     end
   end
 
