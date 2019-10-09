@@ -40,6 +40,10 @@ class SQA
       Ping.distinct.where(:id=>first..last)
     end
 
+    def table_exists?
+      @db.table_exists?(:pings)
+    end
+
     private
 
     def initialize
