@@ -18,7 +18,11 @@ class SQA
         if record.result != 'no response'
           hash["#{ROOT}.#{host}.#{nodecc}.#{nodename}.latency"] = record.latency
         end
-        @client.metrics hash, record.time
+        begin
+          @client.metrics hash, record.time
+        rescue
+          Log.error "Failed to write metrics to Graphite."
+        end
       end
     end
 
