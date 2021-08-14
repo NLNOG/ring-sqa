@@ -34,7 +34,7 @@ class Alarm
       mail << 'X-Mailer: ' + 'ring-sqa'
       mail << ''
       mail = mail.join("\n")
-      mail+@body
+      mail+"\n"+@body
     end
 
     def send_email email
