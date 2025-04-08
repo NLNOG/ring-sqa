@@ -1,18 +1,18 @@
-module Ring
-class SQA
+# frozen_string_literal: true
 
-  if CFG.debug?
-    require 'logger'
-    Log = Logger.new STDERR
-  else
-    begin
-      require 'syslog/logger'
-      Log = Syslog::Logger.new 'ring-sqad%i' % ( CFG.afi == "ipv6" ? 6 : 4 )
-    rescue LoadError
+module Ring
+  class SQA
+    if CFG.debug?
       require 'logger'
-      Log = Logger.new STDERR
+      Log = Logger.new $stderr
+    else
+      begin
+        require 'syslog/logger'
+        Log = Syslog::Logger.new format('ring-sqad%i', (CFG.afi == 'ipv6' ? 6 : 4))
+      rescue LoadError
+        require 'logger'
+        Log = Logger.new $stderr
+      end
     end
   end
-
-end
 end
