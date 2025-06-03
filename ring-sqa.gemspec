@@ -21,4 +21,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'asetus',          '~> 0.3'
   s.add_runtime_dependency 'graphite-api',    '~> 0.1.0'
   s.add_runtime_dependency 'influxdb-client', '>= 0.1', '<= 3.2.0'
+  s.add_runtime_dependency 'prometheus-client', '~> 4.2'
+  s.add_runtime_dependency 'webrick',         '~> 1.9'
 end
