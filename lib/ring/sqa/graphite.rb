@@ -12,10 +12,12 @@ class SQA
       records.each do |record|
         nodename = noderec = node[record.peer][:name].split(".").first
         nodecc = noderec = node[record.peer][:cc].downcase
-        hash = {
-         "#{ROOT}.#{host}.#{nodecc}.#{nodename}.state" => record.result
-        }
-        if record.result != 'no response'
+        hash = {}
+
+        if record.result == 'no response'
+          hash["#{ROOT}.#{host}.#{nodecc}.#{nodename}.state"] = 0
+        else
+          hash["#{ROOT}.#{host}.#{nodecc}.#{nodename}.state"] = 1
           hash["#{ROOT}.#{host}.#{nodecc}.#{nodename}.latency"] = record.latency
         end
         begin
