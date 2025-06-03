@@ -17,6 +17,7 @@ class SQA
         records = records.all
         @graphite.add @db.id_range(first_id, @db_id_seen).all if @graphite
         @influxdb.add @db.id_range(first_id, @db_id_seen).all if @influxdb
+        @prometheus.add @db.id_range(first_id, @db_id_seen).all if @prometheus
         @buffer.push records.map { |record| record.peer }
         @buffer.exceed_median? ? @alarm.set(@buffer) : @alarm.clear(@buffer)
         delay = INTERVAL-(Time.now-start)
@@ -43,6 +44,7 @@ class SQA
       @db_id_seen = 0
       @graphite   = graphite if CFG.graphite?
       @influxdb   = influxdb if CFG.influxdb?
+      @prometheus = prometheus if CFG.prometheus?
     end
 
     def graphite
@@ -55,6 +57,10 @@ class SQA
       InfluxDBWriter.new @nodes
     end
 
+    def prometheus
+      require_relative 'prometheus'
+      Prometheus.new @nodes
+    end
 
   end
 

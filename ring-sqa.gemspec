@@ -16,9 +16,11 @@ Gem::Specification.new do |s|
   s.required_ruby_version =                   '>= 1.9.3'
   s.add_runtime_dependency 'slop',            '~> 3.5'
   s.add_runtime_dependency 'rb-inotify',      '~> 0.9'
-  s.add_runtime_dependency 'sequel',          '~> 4.12'
+  s.add_runtime_dependency 'sequel',          '~> 4.12', '< 4.42.0'
   s.add_runtime_dependency 'sqlite3',         '~> 1.3'
   s.add_runtime_dependency 'asetus',          '~> 0.3'
   s.add_runtime_dependency 'graphite-api',    '~> 0.1.0'
   s.add_runtime_dependency 'influxdb-client', '>= 0.1', '<= 3.2.0'
+  s.add_runtime_dependency 'prometheus-client', '~> 4.2'
+  s.add_runtime_dependency 'webrick',         '~> 1.9'
 end
