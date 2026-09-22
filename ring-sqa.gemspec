@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name              = 'ring-sqa'
-  s.version           = '0.4.4'
+  s.version           = '0.4.5'
   s.licenses          = %w( Apache-2.0 )
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ 'Saku Ytti', 'Job Snijders' ]
@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version =                   '>= 1.9.3'
   s.add_runtime_dependency 'slop',            '~> 3.5'
   s.add_runtime_dependency 'rb-inotify',      '~> 0.9'
-  s.add_runtime_dependency 'sequel',          '~> 4.12'
+  s.add_runtime_dependency 'sequel',          '~> 5.108.0'
   s.add_runtime_dependency 'sqlite3',         '~> 1.3'
   s.add_runtime_dependency 'asetus',          '~> 0.3'
   s.add_runtime_dependency 'graphite-api',    '~> 0.1.0'

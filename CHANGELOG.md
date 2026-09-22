@@ -19,3 +19,6 @@
 
 # 0.4.4
   - InfluxDB support added
+
+# 0.4.5
+  - Fix sequel dependency
